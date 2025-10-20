@@ -122,18 +122,21 @@ class Connect4:
         print()
 
 
+# Modified network architecture
 class DQN(nn.Module):
     """Deep Q-Network for Connect 4"""
     
     def __init__(self, input_size=42, hidden_size=128, output_size=7):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
+        self.ln1 = nn.LayerNorm(hidden_size)  # LayerNorm instead of BatchNorm
         self.fc2 = nn.Linear(hidden_size, hidden_size)
+        self.ln2 = nn.LayerNorm(hidden_size)  # LayerNorm instead of BatchNorm
         self.fc3 = nn.Linear(hidden_size, output_size)
     
     def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
+        x = F.relu(self.ln1(self.fc1(x)))
+        x = F.relu(self.ln2(self.fc2(x)))
         return self.fc3(x)
 
 
@@ -156,6 +159,13 @@ class DQNAgent:
             lr=config.get('learning_rate', 1e-4),
             weight_decay=config.get('weight_decay', 1e-5)
         )
+        # NOTE: some torch builds do not accept `verbose` kwarg here
+        self.scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            self.optimizer, mode='min', factor=0.5, patience=100
+        )
+        # track recent training losses for scheduling/diagnostics
+        self.losses = []
+        # Replay memory (deque) for experience replay
         self.memory = deque(maxlen=config.get('replay_memory_size', 10000))
         self.epsilon = config.get('epsilon_start', 1.0)
         self.epsilon_min = config.get('epsilon_min', 0.01)
@@ -183,7 +193,15 @@ class DQNAgent:
         
         with torch.no_grad():
             state_tensor = self._state_to_input(state)
+            
+            # Set model to evaluation mode temporarily
+            was_training = self.policy_net.training
+            self.policy_net.eval()
+            
             q_values = self.policy_net(state_tensor).cpu().numpy()[0]
+            
+            # Restore original training mode
+            self.policy_net.train(was_training)
             
             # Mask invalid moves
             masked_q = np.full(7, -np.inf)
@@ -251,6 +269,27 @@ class DQNAgent:
         if max_grad > 1e3:
             print(f"[WARN] huge grad detected: {max_grad:.1f}")
         self.optimizer.step()
+        
+        # record loss for scheduler/monitoring
+        self.losses.append(loss.item())
+        # Learning rate scheduling every 10 steps (requires at least 10 entries)
+        if len(self.losses) >= 10 and len(self.losses) % 10 == 0:
+            avg_loss = sum(self.losses[-10:]) / 10
+            try:
+                self.scheduler.step(avg_loss)
+            except Exception as e:
+                print(f"[WARN] scheduler.step failed: {e}")
+        
+        # Add value scaling - prevent Q-values from growing too large
+        with torch.no_grad():
+            scale_factor = 100.0
+            if current_q.abs().max().item() > scale_factor:
+                scale = scale_factor / current_q.abs().max().item()
+                for param in self.policy_net.parameters():
+                    param.data.mul_(scale)
+                for param in self.target_net.parameters():
+                    param.data.mul_(scale)
+                print(f"[INFO] Rescaled network weights by factor {scale:.5f}")
         
         return loss.item()
     
@@ -346,6 +385,119 @@ class TrainingVisualizer:
         print("=" * 60)
 
 
+def _find_winning_move(board, player, env):
+    """Return a winning column for player if exists, else None"""
+    for col in env.get_valid_moves():
+        test = board.copy()
+        for row in range(env.rows - 1, -1, -1):
+            if test[row, col] == 0:
+                test[row, col] = player
+                break
+        # temporary check
+        # reuse Connect4._check_win by creating a lightweight check
+        # we'll inline same logic to avoid instantiating new env
+        def check_win(b, p):
+            rows, cols = b.shape
+            # horiz
+            for r in range(rows):
+                for c in range(cols - 3):
+                    if all(b[r, c + i] == p for i in range(4)):
+                        return True
+            # vert
+            for r in range(rows - 3):
+                for c in range(cols):
+                    if all(b[r + i, c] == p for i in range(4)):
+                        return True
+            # down-right
+            for r in range(rows - 3):
+                for c in range(cols - 3):
+                    if all(b[r + i, c + i] == p for i in range(4)):
+                        return True
+            # up-right
+            for r in range(3, rows):
+                for c in range(cols - 3):
+                    if all(b[r - i, c + i] == p for i in range(4)):
+                        return True
+            return False
+        if check_win(test, player):
+            return col
+    return None
+
+def heuristic_opponent_action(state, env, player=1):
+    """Simple greedy opponent:
+       - Win if possible
+       - Block opponent immediate win
+       - Play center if available
+       - Else random valid move
+    """
+    # player is 1 or 2 representing the moving side in env coordinates
+    # check winning move for player
+    win = _find_winning_move(state, player, env)
+    if win is not None:
+        return win
+    # block opponent
+    other = 3 - player
+    block = _find_winning_move(state, other, env)
+    if block is not None:
+        return block
+    # center preference
+    center = env.cols // 2
+    if center in env.get_valid_moves():
+        return center
+    # fallback random
+    return random.choice(env.get_valid_moves())
+
+def evaluate_agent(agent, env, games=50):
+    """Evaluate agent against heuristic opponent.
+       Agent will play as Player 2 (AI) and heuristic as Player 1.
+       Returns win_rate (AI wins / games), draw_rate, loss_rate.
+    """
+    agent_wins = 0
+    draws = 0
+    losses = 0
+
+    # ensure deterministic policy (no exploration)
+    original_epsilon = agent.epsilon
+    agent.epsilon = 0.0
+
+    # put policy in eval mode for safety
+    was_training = agent.policy_net.training
+    agent.policy_net.eval()
+
+    for _ in range(games):
+        state = env.reset()
+        done = False
+        while not done:
+            if env.current_player == 1:
+                # heuristic opponent move
+                col = heuristic_opponent_action(state, env, player=1)
+                state, reward, done, info = env.make_move(col)
+            else:
+                # AI move (player 2) - flip perspective as training uses
+                flipped = state.copy()
+                flipped[flipped == 1] = 3
+                flipped[flipped == 2] = 1
+                flipped[flipped == 3] = 2
+                valid = env.get_valid_moves()
+                col = agent.get_action(flipped, valid, training=False)
+                state, reward, done, info = env.make_move(col)
+        if info.get('winner') == 2:
+            agent_wins += 1
+        elif info.get('winner') == 1:
+            losses += 1
+        else:
+            draws += 1
+
+    # restore
+    agent.epsilon = original_epsilon
+    agent.policy_net.train(was_training)
+
+    win_rate = agent_wins / games
+    draw_rate = draws / games
+    loss_rate = losses / games
+    return win_rate, draw_rate, loss_rate
+
+
 def train(config):
     """Train the Connect 4 AI"""
     print("Initializing training...")
@@ -355,6 +507,11 @@ def train(config):
     env = Connect4()
     agent = DQNAgent(config)
     visualizer = TrainingVisualizer()
+
+    # Evaluation settings (periodic, against a fixed heuristic opponent)
+    eval_interval = config.get('eval_interval', 500)
+    eval_games = config.get('eval_games', 50)
+    eval_history = deque(maxlen=20)
     
     num_episodes = config.get('num_episodes', 1000)
     save_interval = config.get('save_interval', 100)
@@ -447,6 +604,16 @@ def train(config):
             
             # Render progress every episode
             visualizer.render(episode, agent.epsilon, num_episodes, time_info)
+            
+            # Periodic deterministic evaluation against a fixed heuristic opponent
+            if (episode + 1) % eval_interval == 0:
+                win_rate, draw_rate, loss_rate = evaluate_agent(agent, env, games=eval_games)
+                eval_history.append(win_rate)
+                smoothed = float(np.mean(eval_history))
+                print(f"\n[EVAL] Episodes {episode+1-eval_interval+1}-{episode+1}: win={win_rate:.3f}, draw={draw_rate:.3f}, loss={loss_rate:.3f}")
+                print(f"[EVAL] Smoothed win rate (last {len(eval_history)} evals): {smoothed:.3f}")
+                # small pause so output is readable in terminal
+                time.sleep(0.2)
             
             # Save model periodically
             if (episode + 1) % save_interval == 0:
@@ -555,16 +722,18 @@ def create_default_config(config_file):
     """Create a default configuration file"""
     default_config = {
         "num_episodes": 1000,
-        "learning_rate": 0.001,
+        "learning_rate": 0.0001,  # Use smaller learning rate
         "gamma": 0.99,
         "epsilon_start": 1.0,
         "epsilon_min": 0.01,
         "epsilon_decay": 0.995,
         "replay_memory_size": 10000,
         "batch_size": 64,
-        "target_update": 10,
+        "target_update": 5,  # Update target network more frequently
         "save_interval": 100,
-        "model_path": "connect4_model.pth"
+        "model_path": "connect4_model.pth",
+        "gradient_clip": 0.5,  # Reduce from default 1.0
+        "weight_decay": 1e-4  # Increase regularization
     }
     
     with open(config_file, 'w') as f:
