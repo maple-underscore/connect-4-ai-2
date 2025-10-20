@@ -151,8 +151,11 @@ class DQNAgent:
         self.target_net.eval()
         
         # Training parameters
-        self.optimizer = optim.Adam(self.policy_net.parameters(), 
-                                    lr=config.get('learning_rate', 0.001))
+        self.optimizer = optim.Adam(
+            self.policy_net.parameters(), 
+            lr=config.get('learning_rate', 1e-4),
+            weight_decay=config.get('weight_decay', 1e-5)
+        )
         self.memory = deque(maxlen=config.get('replay_memory_size', 10000))
         self.epsilon = config.get('epsilon_start', 1.0)
         self.epsilon_min = config.get('epsilon_min', 0.01)
@@ -160,14 +163,26 @@ class DQNAgent:
         self.gamma = config.get('gamma', 0.99)
         self.batch_size = config.get('batch_size', 64)
         self.target_update = config.get('target_update', 10)
-        
+
+        # Stability / loss
+        self.loss_fn = nn.SmoothL1Loss()  # Huber loss is more robust than MSE
+        self.gradient_clip = config.get('gradient_clip', 1.0)
+    
+    def _state_to_input(self, state):
+        """Normalize board to -1/0/+1 tensor: player1=+1, player2=-1, empty=0"""
+        # state: numpy array with values {0,1,2}
+        p1 = (state == 1).astype(np.float32)
+        p2 = (state == 2).astype(np.float32)
+        mapped = p1 - p2
+        return torch.from_numpy(mapped.flatten()).unsqueeze(0).to(self.device)
+    
     def get_action(self, state, valid_moves, training=True):
         """Get action using epsilon-greedy policy"""
         if training and random.random() < self.epsilon:
             return random.choice(valid_moves)
         
         with torch.no_grad():
-            state_tensor = torch.FloatTensor(state.flatten()).unsqueeze(0).to(self.device)
+            state_tensor = self._state_to_input(state)
             q_values = self.policy_net(state_tensor).cpu().numpy()[0]
             
             # Mask invalid moves
@@ -178,8 +193,10 @@ class DQNAgent:
             return int(np.argmax(masked_q))
     
     def remember(self, state, action, reward, next_state, done):
-        """Store experience in replay memory"""
-        self.memory.append((state, action, reward, next_state, done))
+        """Store experience in replay memory (clip reward)"""
+        # clip reward to [-1, 1] to avoid large targets
+        reward = max(-1.0, min(1.0, float(reward)))
+        self.memory.append((state.copy(), action, reward, next_state.copy(), done))
     
     def replay(self):
         """Train the network using experience replay"""
@@ -188,25 +205,51 @@ class DQNAgent:
         
         batch = random.sample(self.memory, self.batch_size)
         
-        states = torch.FloatTensor(np.array([s.flatten() for s, _, _, _, _ in batch])).to(self.device)
+        states_np = np.array([ (s == 1).astype(np.float32) - (s == 2).astype(np.float32) for s, _, _, _, _ in batch ])
+        next_states_np = np.array([ (s == 1).astype(np.float32) - (s == 2).astype(np.float32) for _, _, _, s, _ in batch ])
+        
+        states = torch.FloatTensor(states_np.reshape(self.batch_size, -1)).to(self.device)
         actions = torch.LongTensor([a for _, a, _, _, _ in batch]).to(self.device)
         rewards = torch.FloatTensor([r for _, _, r, _, _ in batch]).to(self.device)
-        next_states = torch.FloatTensor(np.array([s.flatten() for _, _, _, s, _ in batch])).to(self.device)
-        dones = torch.FloatTensor([d for _, _, _, _, d in batch]).to(self.device)
+        next_states = torch.FloatTensor(next_states_np.reshape(self.batch_size, -1)).to(self.device)
+        dones = torch.FloatTensor([float(d) for _, _, _, _, d in batch]).to(self.device)
         
         # Current Q values
         current_q = self.policy_net(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         
-        # Next Q values
+        # Next Q values (from target)
         next_q = self.target_net(next_states).max(1)[0]
         target_q = rewards + (1 - dones) * self.gamma * next_q
         
-        # Compute loss
-        loss = F.mse_loss(current_q, target_q.detach())
+        # Diagnostics
+        max_q = current_q.abs().max().item()
+        max_target = target_q.abs().max().item()
+        if max_q > 1e3 or max_target > 1e3:
+            print(f"[WARN] Large Q magnitudes: max_q={max_q:.1f}, max_target={max_target:.1f}")
         
-        # Optimize
+        # Compute robust loss
+        loss = self.loss_fn(current_q, target_q.detach())
+        
+        # Detect pathological values
+        if torch.isnan(loss) or torch.isinf(loss):
+            print("Detected NaN/Inf loss -- skipping step and dumping diagnostics")
+            print("loss:", loss)
+            print("current_q min/max:", current_q.min().item(), current_q.max().item())
+            print("target_q min/max:", target_q.min().item(), target_q.max().item())
+            # optionally save a checkpoint of network weights here
+            return float('nan')
+        
+        # Optimize with gradient clipping
         self.optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), self.gradient_clip)
+        # Optional: detect huge gradients
+        max_grad = 0.0
+        for p in self.policy_net.parameters():
+            if p.grad is not None:
+                max_grad = max(max_grad, p.grad.abs().max().item())
+        if max_grad > 1e3:
+            print(f"[WARN] huge grad detected: {max_grad:.1f}")
         self.optimizer.step()
         
         return loss.item()
@@ -261,8 +304,12 @@ class TrainingVisualizer:
         else:
             self.win_rates.append(0)
     
-    def render(self, episode, epsilon, total_episodes):
-        """Render training progress to console"""
+    def render(self, episode, epsilon, total_episodes, time_info=None):
+        """Render training progress to console
+        
+        time_info: optional string like '0s / 1m 23s' representing
+                   {time_passed} / {time_remaining}
+        """
         os.system('clear' if os.name == 'posix' else 'cls')
         
         print("=" * 60)
@@ -271,6 +318,9 @@ class TrainingVisualizer:
         print(f"\nEpisode: {episode + 1}/{total_episodes}")
         print(f"Progress: [{'#' * int(50 * (episode + 1) / total_episodes):<50}] {100 * (episode + 1) / total_episodes:.1f}%")
         print(f"\nEpsilon (Exploration Rate): {epsilon:.4f}")
+        
+        if time_info:
+            print(f"\nTime: {time_info}")
         
         if len(self.episode_rewards) > 0:
             recent_rewards = self.episode_rewards[-100:]
@@ -309,6 +359,19 @@ def train(config):
     num_episodes = config.get('num_episodes', 1000)
     save_interval = config.get('save_interval', 100)
     model_path = config.get('model_path', 'connect4_model.pth')
+    
+    start_time = time.time()
+    
+    def _fmt_time(seconds):
+        s = int(max(0, seconds))
+        h = s // 3600
+        m = (s % 3600) // 60
+        sec = s % 60
+        if h > 0:
+            return f"{h}h {m:02d}m {sec:02d}s"
+        if m > 0:
+            return f"{m}m {sec:02d}s"
+        return f"{sec}s"
     
     try:
         for episode in range(num_episodes):
@@ -374,8 +437,16 @@ def train(config):
             avg_loss = np.mean(episode_losses) if episode_losses else None
             visualizer.update(episode, total_reward, episode_length, avg_loss, info)
             
+            # Time bookkeeping and ETA
+            elapsed = time.time() - start_time
+            episodes_done = episode + 1
+            avg_per_ep = elapsed / episodes_done
+            remaining_eps = max(0, num_episodes - episodes_done)
+            est_remaining = avg_per_ep * remaining_eps
+            time_info = f"{_fmt_time(elapsed)} / {_fmt_time(est_remaining)}"
+            
             # Render progress every episode
-            visualizer.render(episode, agent.epsilon, num_episodes)
+            visualizer.render(episode, agent.epsilon, num_episodes, time_info)
             
             # Save model periodically
             if (episode + 1) % save_interval == 0:
