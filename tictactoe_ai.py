@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Connect 4 AI Trainer with Deep Q-Learning
+TicTacToe AI Trainer with Deep Q-Learning
 
-This module implements a Connect 4 game environment and a Deep Q-Learning agent
+This module implements a customizable TicTacToe game environment and a Deep Q-Learning agent
 that learns to play the game through self-play. It includes:
+- Customizable grid size and win streak length
 - Configurable training parameters
 - Console GUI for visualizing training progress
 - Model save/load functionality
 - Play mode to compete against the trained model
+- Tuple-based position input for moves
 """
 
 import numpy as np
@@ -55,8 +57,11 @@ class Logger:
         log_path = os.path.join('logs', log_file)
         
         # Setup logger
-        self.logger = logging.getLogger('training')
+        self.logger = logging.getLogger('tictactoe_training')
         self.logger.setLevel(log_level)
+        
+        # Clear existing handlers
+        self.logger.handlers.clear()
         
         # File handler
         file_handler = logging.FileHandler(log_path)
@@ -224,38 +229,46 @@ class MetricsTracker:
             'eval_win_rate': self.metrics['eval_win_rates'][-1] if self.metrics['eval_win_rates'] else 0
         }
 
-class Connect4:
-    """Connect 4 game environment"""
+class TicTacToe:
+    """Customizable TicTacToe game environment"""
     
-    def __init__(self):
-        self.rows = 6
-        self.cols = 7
-        self.board = np.zeros((self.rows, self.cols), dtype=int)
+    def __init__(self, grid_size=3, win_length=3):
+        self.grid_size = grid_size
+        self.win_length = win_length
+        self.board = np.zeros((self.grid_size, self.grid_size), dtype=int)
         self.current_player = 1
         
     def reset(self):
         """Reset the game board"""
-        self.board = np.zeros((self.rows, self.cols), dtype=int)
+        self.board = np.zeros((self.grid_size, self.grid_size), dtype=int)
         self.current_player = 1
         return self.board.copy()
     
     def get_valid_moves(self):
-        """Get list of valid column indices"""
-        return [col for col in range(self.cols) if self.board[0, col] == 0]
+        """Get list of valid (row, col) positions"""
+        valid_moves = []
+        for row in range(self.grid_size):
+            for col in range(self.grid_size):
+                if self.board[row, col] == 0:
+                    valid_moves.append((row, col))
+        return valid_moves
     
-    def make_move(self, col):
+    def make_move(self, position):
         """
-        Make a move in the specified column
+        Make a move at the specified position (row, col)
         Returns: (new_state, reward, done, info)
         """
-        if col not in self.get_valid_moves():
+        if isinstance(position, int):
+            # Convert flat index to (row, col)
+            row, col = divmod(position, self.grid_size)
+        else:
+            row, col = position
+        
+        if (row, col) not in self.get_valid_moves():
             return self.board.copy(), -10, True, {"invalid_move": True}
         
-        # Drop the piece
-        for row in range(self.rows - 1, -1, -1):
-            if self.board[row, col] == 0:
-                self.board[row, col] = self.current_player
-                break
+        # Place the piece
+        self.board[row, col] = self.current_player
         
         # Check for win
         if self._check_win(self.current_player):
@@ -271,55 +284,67 @@ class Connect4:
     
     def _check_win(self, player):
         """Check if the specified player has won"""
-        # Check horizontal
-        for row in range(self.rows):
-            for col in range(self.cols - 3):
-                if all(self.board[row, col + i] == player for i in range(4)):
-                    return True
+        # Check all possible directions for win_length in a row
+        directions = [
+            (0, 1),   # horizontal
+            (1, 0),   # vertical
+            (1, 1),   # diagonal down-right
+            (1, -1),  # diagonal down-left
+        ]
         
-        # Check vertical
-        for row in range(self.rows - 3):
-            for col in range(self.cols):
-                if all(self.board[row + i, col] == player for i in range(4)):
-                    return True
+        for row in range(self.grid_size):
+            for col in range(self.grid_size):
+                if self.board[row, col] == player:
+                    for dr, dc in directions:
+                        if self._check_line(row, col, dr, dc, player):
+                            return True
+        return False
+    
+    def _check_line(self, start_row, start_col, dr, dc, player):
+        """Check if there's a winning line starting from (start_row, start_col) in direction (dr, dc)"""
+        count = 0
+        row, col = start_row, start_col
         
-        # Check diagonal (down-right)
-        for row in range(self.rows - 3):
-            for col in range(self.cols - 3):
-                if all(self.board[row + i, col + i] == player for i in range(4)):
-                    return True
-        
-        # Check diagonal (up-right)
-        for row in range(3, self.rows):
-            for col in range(self.cols - 3):
-                if all(self.board[row - i, col + i] == player for i in range(4)):
-                    return True
+        while (0 <= row < self.grid_size and 0 <= col < self.grid_size and 
+               self.board[row, col] == player):
+            count += 1
+            if count >= self.win_length:
+                return True
+            row += dr
+            col += dc
         
         return False
 
     def get_winning_positions(self, player):
-        """Return list of 4 (row,col) tuples for a winning alignment, or [] if none."""
-        # horizontal
-        for row in range(self.rows):
-            for col in range(self.cols - 3):
-                if all(self.board[row, col + i] == player for i in range(4)):
-                    return [(row, col + i) for i in range(4)]
-        # vertical
-        for row in range(self.rows - 3):
-            for col in range(self.cols):
-                if all(self.board[row + i, col] == player for i in range(4)):
-                    return [(row + i, col) for i in range(4)]
-        # down-right diagonal
-        for row in range(self.rows - 3):
-            for col in range(self.cols - 3):
-                if all(self.board[row + i, col + i] == player for i in range(4)):
-                    return [(row + i, col + i) for i in range(4)]
-        # up-right diagonal
-        for row in range(3, self.rows):
-            for col in range(self.cols - 3):
-                if all(self.board[row - i, col + i] == player for i in range(4)):
-                    return [(row - i, col + i) for i in range(4)]
+        """Return list of (row,col) tuples for a winning alignment, or [] if none."""
+        directions = [
+            (0, 1),   # horizontal
+            (1, 0),   # vertical
+            (1, 1),   # diagonal down-right
+            (1, -1),  # diagonal down-left
+        ]
+        
+        for row in range(self.grid_size):
+            for col in range(self.grid_size):
+                if self.board[row, col] == player:
+                    for dr, dc in directions:
+                        positions = self._get_line_positions(row, col, dr, dc, player)
+                        if len(positions) >= self.win_length:
+                            return positions[:self.win_length]
         return []
+    
+    def _get_line_positions(self, start_row, start_col, dr, dc, player):
+        """Get all consecutive positions in a line for the given player"""
+        positions = []
+        row, col = start_row, start_col
+        
+        while (0 <= row < self.grid_size and 0 <= col < self.grid_size and 
+               self.board[row, col] == player):
+            positions.append((row, col))
+            row += dr
+            col += dc
+        
+        return positions
     
     def render(self):
         """Render the game board to console with colored tokens"""
@@ -328,11 +353,19 @@ class Connect4:
         win_pos_p2 = self.get_winning_positions(2)
         win_set = set(win_pos_p1 + win_pos_p2)
         
-        print("\n|" + "|".join(str(i) for i in range(self.cols)) + "|")
-        print("-" * (self.cols * 2 + 1))
-        for row in range(self.rows):
-            row_str = "|"
-            for col in range(self.cols):
+        print()
+        # Print column headers
+        header = "   "
+        for col in range(self.grid_size):
+            header += f"{col:2} "
+        print(header)
+        
+        # Print separator
+        print("  " + "-" * (self.grid_size * 3 + 1))
+        
+        for row in range(self.grid_size):
+            row_str = f"{row} |"
+            for col in range(self.grid_size):
                 cell = self.board[row, col]
                 token = " "
                 if cell == 1:
@@ -341,26 +374,28 @@ class Connect4:
                 elif cell == 2:
                     token = "O"
                     token = color.BLUE + token + style.RESET_ALL
-                # override if part of winning four
+                # override if part of winning line
                 if (row, col) in win_set:
                     # color winning tokens green regardless of X/O color
                     token = color.GREEN + (self.board[row, col] and ("X" if self.board[row, col] == 1 else "O")) + style.RESET_ALL
-                row_str += token + "|"
+                row_str += f" {token} "
+            row_str += "|"
             print(row_str)
-        print("-" * (self.cols * 2 + 1))
+        
+        # Print bottom separator
+        print("  " + "-" * (self.grid_size * 3 + 1))
         print()
 
 
-# Modified network architecture
 class DQN(nn.Module):
-    """Deep Q-Network for Connect 4"""
+    """Deep Q-Network for TicTacToe"""
     
-    def __init__(self, input_size=42, hidden_size=128, output_size=7):
+    def __init__(self, input_size, hidden_size=128, output_size=9):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
-        self.ln1 = nn.LayerNorm(hidden_size)  # LayerNorm instead of BatchNorm
+        self.ln1 = nn.LayerNorm(hidden_size)
         self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.ln2 = nn.LayerNorm(hidden_size)  # LayerNorm instead of BatchNorm
+        self.ln2 = nn.LayerNorm(hidden_size)
         self.fc3 = nn.Linear(hidden_size, output_size)
     
     def forward(self, x):
@@ -370,15 +405,18 @@ class DQN(nn.Module):
 
 
 class DQNAgent:
-    """Deep Q-Learning Agent"""
+    """Deep Q-Learning Agent for TicTacToe"""
     
-    def __init__(self, config):
+    def __init__(self, config, grid_size=3):
         self.config = config
+        self.grid_size = grid_size
+        self.input_size = grid_size * grid_size
+        self.output_size = grid_size * grid_size
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Networks
-        self.policy_net = DQN().to(self.device)
-        self.target_net = DQN().to(self.device)
+        self.policy_net = DQN(self.input_size, output_size=self.output_size).to(self.device)
+        self.target_net = DQN(self.input_size, output_size=self.output_size).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
         
@@ -400,9 +438,9 @@ class DQNAgent:
             )
         else:
             self.scheduler = None
-        # track recent training losses for scheduling/diagnostics
         self.losses = []
-        # Replay memory (deque) for experience replay
+        
+        # Replay memory
         self.memory = deque(maxlen=config.get('replay_memory_size', 10000))
         self.epsilon = config.get('epsilon_start', 1.0)
         self.epsilon_min = config.get('epsilon_min', 0.01)
@@ -411,294 +449,130 @@ class DQNAgent:
         self.batch_size = config.get('batch_size', 64)
         self.target_update = config.get('target_update', 10)
 
-        # Stability / loss
-        self.loss_fn = nn.SmoothL1Loss()  # Huber loss is more robust than MSE
+        # Stability
+        self.loss_fn = nn.SmoothL1Loss()
         self.gradient_clip = config.get('gradient_clip', 1.0)
     
     def _state_to_input(self, state):
         """Normalize board to -1/0/+1 tensor: player1=+1, player2=-1, empty=0"""
-        # state: numpy array with values {0,1,2}
         p1 = (state == 1).astype(np.float32)
         p2 = (state == 2).astype(np.float32)
         mapped = p1 - p2
         return torch.from_numpy(mapped.flatten()).unsqueeze(0).to(self.device)
 
-    def _check_potential_diagonal(self, board, player, valid_moves):
-        """Check for potential diagonal wins and threats that require immediate attention"""
-        rows, cols = board.shape
-        threats = []
-        
-        # Check potential diagonal threats requiring just one more move
-        for col in valid_moves:
-            # Find row where piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate placing piece
-            test = board.copy()
-            test[row, col] = player
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(player) == 3 and diagonal.count(0) == 1:
-                        threats.append((col, 2))  # High priority threat
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(player) == 3 and diagonal.count(0) == 1:
-                        threats.append((col, 2))  # High priority threat
-        
-        return threats
+    def _position_to_index(self, position):
+        """Convert (row, col) position to flat index"""
+        if isinstance(position, tuple):
+            row, col = position
+            return row * self.grid_size + col
+        return position
 
-    def _check_diagonal_setup(self, board, player, valid_moves, opponent_moves=None):
-        """Check for moves that create or prevent diagonal setups"""
-        if opponent_moves is None:
-            opponent_moves = valid_moves
-            
-        rows, cols = board.shape
-        setups = []
-        blocks = []
+    def _index_to_position(self, index):
+        """Convert flat index to (row, col) position"""
+        return divmod(index, self.grid_size)
+
+    def _check_win_board(self, board, player, win_length):
+        """Quick inline win check for a numpy board"""
+        grid_size = board.shape[0]
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         
-        # Look for setups that create two threats in one move
-        for col in valid_moves:
-            # Find row where piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate our move
-            test = board.copy()
-            test[row, col] = player
-            
-            # Count how many potential diagonal threats we create
-            threat_count = 0
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(player) >= 2 and diagonal.count(0) == 4 - diagonal.count(player):
-                        threat_count += 1
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(player) >= 2 and diagonal.count(0) == 4 - diagonal.count(player):
-                        threat_count += 1
-            
-            if threat_count >= 2:
-                setups.append((col, 1))  # Medium priority setup
-                
-        # Check opponent's potential setups to block
-        opponent = 3 - player
-        for col in opponent_moves:
-            # Find row where opponent piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate opponent move
-            test = board.copy()
-            test[row, col] = opponent
-            
-            # Count how many diagonal threats opponent creates
-            threat_count = 0
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(opponent) >= 2 and diagonal.count(0) == 4 - diagonal.count(opponent):
-                        threat_count += 1
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(opponent) >= 2 and diagonal.count(0) == 4 - diagonal.count(opponent):
-                        threat_count += 1
-            
-            if threat_count >= 2:
-                blocks.append((col, 1))  # Block opponent's potential setup
-        
-        return setups, blocks
-    
-    def _check_win_board(self, board, player):
-        """Quick inline win check for a numpy board (used by tactical rules)."""
-        rows, cols = board.shape
-        # horiz
-        for r in range(rows):
-            for c in range(cols - 3):
-                if all(board[r, c + i] == player for i in range(4)):
-                    return True
-        # vert
-        for r in range(rows - 3):
-            for c in range(cols):
-                if all(board[r + i, c] == player for i in range(4)):
-                    return True
-        # down-right
-        for r in range(rows - 3):
-            for c in range(cols - 3):
-                if all(board[r + i, c + i] == player for i in range(4)):
-                    return True
-        # up-right
-        for r in range(3, rows):
-            for c in range(cols - 3):
-                if all(board[r - i, c + i] == player for i in range(4)):
-                    return True
+        for row in range(grid_size):
+            for col in range(grid_size):
+                if board[row, col] == player:
+                    for dr, dc in directions:
+                        count = 0
+                        r, c = row, col
+                        while (0 <= r < grid_size and 0 <= c < grid_size and 
+                               board[r, c] == player):
+                            count += 1
+                            if count >= win_length:
+                                return True
+                            r += dr
+                            c += dc
         return False
 
-    def _find_winning_move_local(self, board, player, valid_moves):
-        """Return a winning column for player if exists, else None"""
-        for col in valid_moves:
+    def _find_winning_move_local(self, board, player, valid_moves, win_length):
+        """Return a winning position for player if exists, else None"""
+        for position in valid_moves:
+            row, col = position
             test = board.copy()
-            for row in range(test.shape[0] - 1, -1, -1):
-                if test[row, col] == 0:
-                    test[row, col] = player
-                    break
-            if self._check_win_board(test, player):
-                return col
+            test[row, col] = player
+            if self._check_win_board(test, player, win_length):
+                return position
         return None
-    
-    def _count_immediate_wins(self, board, player):
+
+    def _count_immediate_wins(self, board, player, win_length):
         """Count how many immediate winning moves `player` has on `board`."""
-        rows, cols = board.shape
         count = 0
-        for col in range(cols):
-            if board[0, col] != 0:
-                continue
-            test = board.copy()
-            for r in range(rows - 1, -1, -1):
-                if test[r, col] == 0:
-                    test[r, col] = player
-                    break
-            if self._check_win_board(test, player):
-                count += 1
+        grid_size = board.shape[0]
+        for row in range(grid_size):
+            for col in range(grid_size):
+                if board[row, col] != 0:
+                    continue
+                test = board.copy()
+                test[row, col] = player
+                if self._check_win_board(test, player, win_length):
+                    count += 1
         return count
-    
-    def _find_fork_moves(self, board, player, valid_moves=None):
-        """Return list of columns where player would create a fork (>=2 immediate wins)."""
-        rows, cols = board.shape
-        if valid_moves is None:
-            valid_moves = [c for c in range(cols) if board[0, c] == 0]
+
+    def _find_fork_moves(self, board, player, valid_moves, win_length):
+        """Return list of positions where player would create a fork (>=2 immediate wins)."""
         forks = []
-        for col in valid_moves:
-            # simulate placing at col
+        for position in valid_moves:
+            row, col = position
             test = board.copy()
-            placed = False
-            for r in range(rows - 1, -1, -1):
-                if test[r, col] == 0:
-                    test[r, col] = player
-                    placed = True
-                    break
-            if not placed:
-                continue
-            # count how many immediate winning moves player would have after this placement
-            wins_after = self._count_immediate_wins(test, player)
-            # If the simulated placement is itself a win, wins_after will be >=1; fork requires 2 or more
+            test[row, col] = player
+            wins_after = self._count_immediate_wins(test, player, win_length)
             if wins_after >= 2:
-                forks.append(col)
+                forks.append(position)
         return forks
-     
-    def get_action(self, state, valid_moves, training=True):
-        """Get action using epsilon-greedy policy with enhanced tactical reasoning"""
-        # 1) Winning move for us (agent pieces encoded as 1 in this interface)
-        win_move = self._find_winning_move_local(state, 1, valid_moves)
+
+    def _find_center_moves(self, valid_moves):
+        """Find center positions (prefer center for opening strategy)"""
+        center = self.grid_size // 2
+        center_moves = []
+        for position in valid_moves:
+            row, col = position
+            distance_from_center = abs(row - center) + abs(col - center)
+            center_moves.append((position, distance_from_center))
+        center_moves.sort(key=lambda x: x[1])
+        return [pos for pos, _ in center_moves]
+
+    def get_action(self, state, valid_moves, training=True, win_length=3):
+        """Get action using epsilon-greedy policy with tactical reasoning"""
+        # 1) Winning move for us
+        win_move = self._find_winning_move_local(state, 1, valid_moves, win_length)
         if win_move is not None:
-            return win_move
+            return self._position_to_index(win_move)
 
-        # 2) Block opponent immediate win (opponent pieces are 2)
-        block_move = self._find_winning_move_local(state, 2, valid_moves)
+        # 2) Block opponent immediate win
+        block_move = self._find_winning_move_local(state, 2, valid_moves, win_length)
         if block_move is not None:
-            return block_move
-        
-        # 2b) Block opponent forks (moves that create >=2 immediate wins)
-        opponent = 2
-        opponent_forks = self._find_fork_moves(state, opponent, valid_moves)
+            return self._position_to_index(block_move)
+
+        # 3) Block opponent forks
+        opponent_forks = self._find_fork_moves(state, 2, valid_moves, win_length)
         if opponent_forks:
-            # Prefer directly playing into the fork column(s) if possible
-            for c in opponent_forks:
-                if c in valid_moves:
-                    return c
-            # Otherwise try to find a move that prevents all opponent forks after our play
-            for my_move in valid_moves:
-                # simulate our move
-                test = state.copy()
-                for r in range(test.shape[0] - 1, -1, -1):
-                    if test[r, my_move] == 0:
-                        test[r, my_move] = 1
-                        break
-                new_opponent_forks = self._find_fork_moves(test, opponent)
-                if not new_opponent_forks:
-                    return my_move
-            # fallback: block earliest fork column (will be handled above if playable)
- 
-        # 3) Handle potential diagonal threats (near-wins that need attention)
-        diagonal_threats = self._check_potential_diagonal(state, 2, valid_moves)
-        if diagonal_threats:
-            # Sort by priority and return highest priority threat to block
-            diagonal_threats.sort(key=lambda x: x[1], reverse=True)
-            return diagonal_threats[0][0]
- 
-        # 4) Look for our own diagonal opportunities
-        our_diagonal_threats = self._check_potential_diagonal(state, 1, valid_moves)
-        if our_diagonal_threats:
-            # Sort by priority and return highest priority opportunity
-            our_diagonal_threats.sort(key=lambda x: x[1], reverse=True)
-            return our_diagonal_threats[0][0]
-        
-        # 4b) Try to create a fork for ourselves if available
-        my_forks = self._find_fork_moves(state, 1, valid_moves)
+            return self._position_to_index(opponent_forks[0])
+
+        # 4) Create our own fork
+        my_forks = self._find_fork_moves(state, 1, valid_moves, win_length)
         if my_forks:
-            # prefer center-aligned fork or just return first
-            center = state.shape[1] // 2
-            if center in my_forks:
-                return center
-            return my_forks[0]
-         
-        # 5) Check for diagonal setups (moves that create multiple threats)
-        setups, blocks = self._check_diagonal_setup(state, 1, valid_moves)
-        if setups:
-            setups.sort(key=lambda x: x[1], reverse=True)
-            return setups[0][0]
-        
-        # 6) Block opponent's potential diagonal setups
-        if blocks:
-            blocks.sort(key=lambda x: x[1], reverse=True)
-            return blocks[0][0]
+            return self._position_to_index(my_forks[0])
 
-        # 7) Center preference as a cheap heuristic
-        center = state.shape[1] // 2
-        if center in valid_moves:
-            if (not training) or random.random() < 0.7:
-                return center
+        # 5) Center preference
+        center_moves = self._find_center_moves(valid_moves)
+        if center_moves and ((not training) or random.random() < 0.7):
+            return self._position_to_index(center_moves[0])
 
-        # 8) Exploration
+        # 6) Exploration
         if training and random.random() < self.epsilon:
-            return random.choice(valid_moves)
+            position = random.choice(valid_moves)
+            return self._position_to_index(position)
 
-        # 9) Model action (use eval mode and no grad for single-sample inference)
+        # 7) Model action
         with torch.no_grad():
             state_tensor = self._state_to_input(state)
-
             was_training = self.policy_net.training
             self.policy_net.eval()
             q_values = self.policy_net(state_tensor).cpu().numpy()[0]
@@ -706,15 +580,15 @@ class DQNAgent:
                 self.policy_net.train()
 
         # Mask invalid moves
-        masked_q = np.full(7, -np.inf, dtype=np.float32)
-        for move in valid_moves:
-            masked_q[move] = q_values[move]
+        masked_q = np.full(self.output_size, -np.inf, dtype=np.float32)
+        for position in valid_moves:
+            index = self._position_to_index(position)
+            masked_q[index] = q_values[index]
 
         return int(np.argmax(masked_q))
     
     def remember(self, state, action, reward, next_state, done):
-        """Store experience in replay memory (clip reward)"""
-        # clip reward to [-1, 1] to avoid large targets
+        """Store experience in replay memory"""
         reward = max(-1.0, min(1.0, float(reward)))
         self.memory.append((state.copy(), action, reward, next_state.copy(), done))
     
@@ -737,51 +611,24 @@ class DQNAgent:
         # Current Q values
         current_q = self.policy_net(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         
-        # Double DQN: policy_net selects next action, target_net evaluates it
+        # Double DQN
         with torch.no_grad():
             next_actions = self.policy_net(next_states).argmax(1).unsqueeze(1)
             next_q = self.target_net(next_states).gather(1, next_actions).squeeze(1)
             target_q = rewards + (1 - dones) * self.gamma * next_q
         
-        # Diagnostics for large Q magnitudes
-        try:
-            max_q = current_q.abs().max().item()
-            max_target = target_q.abs().max().item()
-            if max_q > 1e3 or max_target > 1e3:
-                print(f"[WARN] Large Q magnitudes: max_q={max_q:.1f}, max_target={max_target:.1f}")
-        except Exception:
-            pass
-        
-        # Compute robust loss
         loss = self.loss_fn(current_q, target_q.detach())
         
-        # Detect pathological values
         if torch.isnan(loss) or torch.isinf(loss):
-            print("Detected NaN/Inf loss -- skipping step and dumping diagnostics")
-            try:
-                print("loss:", loss.item())
-                print("current_q min/max:", current_q.min().item(), current_q.max().item())
-                print("target_q min/max:", target_q.min().item(), target_q.max().item())
-            except Exception:
-                pass
+            print("Detected NaN/Inf loss -- skipping step")
             return float('nan')
         
-        # Optimize with gradient clipping
         self.optimizer.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), self.gradient_clip)
-        # Optional: detect huge gradients
-        max_grad = 0.0
-        for p in self.policy_net.parameters():
-            if p.grad is not None:
-                max_grad = max(max_grad, p.grad.abs().max().item())
-        if max_grad > 1e3:
-            print(f"[WARN] huge grad detected: {max_grad:.1f}")
         self.optimizer.step()
         
-        # record loss for scheduler/monitoring
         self.losses.append(loss.item())
-        # Learning rate scheduling every 10 steps (requires at least 10 entries)
         if self.scheduler and len(self.losses) >= 10 and len(self.losses) % 10 == 0:
             avg_loss = sum(self.losses[-10:]) / 10
             try:
@@ -789,7 +636,7 @@ class DQNAgent:
             except Exception as e:
                 print(f"[WARN] scheduler.step failed: {e}")
         
-        # Add value scaling - prevent Q-values from growing too large
+        # Value scaling
         with torch.no_grad():
             scale_factor = 100.0
             if current_q.abs().max().item() > scale_factor:
@@ -817,6 +664,7 @@ class DQNAgent:
             'target_net_state_dict': self.target_net.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
             'epsilon': self.epsilon,
+            'grid_size': self.grid_size,
         }, filepath)
     
     def load(self, filepath):
@@ -826,6 +674,10 @@ class DQNAgent:
         self.target_net.load_state_dict(checkpoint['target_net_state_dict'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         self.epsilon = checkpoint.get('epsilon', self.epsilon_min)
+        # Check if grid_size matches
+        saved_grid_size = checkpoint.get('grid_size', 3)
+        if saved_grid_size != self.grid_size:
+            print(f"Warning: Model was trained on {saved_grid_size}x{saved_grid_size} grid, but current grid is {self.grid_size}x{self.grid_size}")
 
 
 class TrainingVisualizer:
@@ -838,12 +690,12 @@ class TrainingVisualizer:
         """Update statistics"""
         self.metrics_tracker.update(episode, reward, length, loss, result, eval_metrics, lr, epsilon)
     
-    def render(self, episode, epsilon, total_episodes, time_info=None, current_lr=None):
+    def render(self, episode, epsilon, total_episodes, time_info=None, grid_size=3, win_length=3, current_lr=None):
         """Render training progress to console"""
         os.system('clear' if os.name == 'posix' else 'cls')
         
         print("=" * 60)
-        print("CONNECT 4 AI - TRAINING PROGRESS")
+        print(f"TICTACTOE AI ({grid_size}x{grid_size}, win={win_length}) - TRAINING PROGRESS")
         print("=" * 60)
         print(f"\nEpisode: {episode + 1}/{total_episodes}")
         print(f"Progress: [{'#' * int(50 * (episode + 1) / total_episodes):<50}] {100 * (episode + 1) / total_episodes:.1f}%")
@@ -885,82 +737,46 @@ class TrainingVisualizer:
         print("=" * 60)
 
 
-def _find_winning_move(board, player, env):
-    """Return a winning column for player if exists, else None"""
-    for col in env.get_valid_moves():
-        test = board.copy()
-        for row in range(env.rows - 1, -1, -1):
-            if test[row, col] == 0:
-                test[row, col] = player
-                break
-        # temporary check
-        # reuse Connect4._check_win by creating a lightweight check
-        # we'll inline same logic to avoid instantiating new env
-        def check_win(b, p):
-            rows, cols = b.shape
-            # horiz
-            for r in range(rows):
-                for c in range(cols - 3):
-                    if all(b[r, c + i] == p for i in range(4)):
-                        return True
-            # vert
-            for r in range(rows - 3):
-                for c in range(cols):
-                    if all(b[r + i, c] == p for i in range(4)):
-                        return True
-            # down-right
-            for r in range(rows - 3):
-                for c in range(cols - 3):
-                    if all(b[r + i, c + i] == p for i in range(4)):
-                        return True
-            # up-right
-            for r in range(3, rows):
-                for c in range(cols - 3):
-                    if all(b[r - i, c + i] == p for i in range(4)):
-                        return True
-            return False
-        if check_win(test, player):
-            return col
-    return None
-
 def heuristic_opponent_action(state, env, player=1):
-    """Simple greedy opponent:
-       - Win if possible
-       - Block opponent immediate win
-       - Play center if available
-       - Else random valid move
-    """
-    # player is 1 or 2 representing the moving side in env coordinates
-    # check winning move for player
-    win = _find_winning_move(state, player, env)
-    if win is not None:
-        return win
-    # block opponent
+    """Simple greedy opponent for TicTacToe"""
+    # Check winning move for player
+    win_move = env._find_winning_move_local if hasattr(env, '_find_winning_move_local') else None
+    if win_move:
+        win = win_move(state, player, env.get_valid_moves(), env.win_length)
+        if win is not None:
+            return win
+    
+    # Block opponent
     other = 3 - player
-    block = _find_winning_move(state, other, env)
-    if block is not None:
-        return block
-    # center preference
-    center = env.cols // 2
-    if center in env.get_valid_moves():
-        return center
-    # fallback random
-    return random.choice(env.get_valid_moves())
+    if win_move:
+        block = win_move(state, other, env.get_valid_moves(), env.win_length)
+        if block is not None:
+            return block
+    
+    # Center preference
+    valid_moves = env.get_valid_moves()
+    center = env.grid_size // 2
+    if (center, center) in valid_moves:
+        return (center, center)
+    
+    # Corners
+    corners = [(0, 0), (0, env.grid_size-1), (env.grid_size-1, 0), (env.grid_size-1, env.grid_size-1)]
+    corner_moves = [pos for pos in corners if pos in valid_moves]
+    if corner_moves:
+        return random.choice(corner_moves)
+    
+    # Random fallback
+    return random.choice(valid_moves)
+
 
 def evaluate_agent(agent, env, games=50):
-    """Evaluate agent against heuristic opponent.
-       Agent will play as Player 2 (AI) and heuristic as Player 1.
-       Returns win_rate (AI wins / games), draw_rate, loss_rate.
-    """
+    """Evaluate agent against heuristic opponent"""
     agent_wins = 0
     draws = 0
     losses = 0
 
-    # ensure deterministic policy (no exploration)
     original_epsilon = agent.epsilon
     agent.epsilon = 0.0
-
-    # put policy in eval mode for safety
     was_training = agent.policy_net.training
     agent.policy_net.eval()
 
@@ -970,17 +786,19 @@ def evaluate_agent(agent, env, games=50):
         while not done:
             if env.current_player == 1:
                 # heuristic opponent move
-                col = heuristic_opponent_action(state, env, player=1)
-                state, reward, done, info = env.make_move(col)
+                position = heuristic_opponent_action(state, env, player=1)
+                state, reward, done, info = env.make_move(position)
             else:
-                # AI move (player 2) - flip perspective as training uses
+                # AI move (player 2)
                 flipped = state.copy()
                 flipped[flipped == 1] = 3
                 flipped[flipped == 2] = 1
                 flipped[flipped == 3] = 2
                 valid = env.get_valid_moves()
-                col = agent.get_action(flipped, valid, training=False)
-                state, reward, done, info = env.make_move(col)
+                action_index = agent.get_action(flipped, valid, training=False, win_length=env.win_length)
+                position = agent._index_to_position(action_index)
+                state, reward, done, info = env.make_move(position)
+        
         if info.get('winner') == 2:
             agent_wins += 1
         elif info.get('winner') == 1:
@@ -988,7 +806,6 @@ def evaluate_agent(agent, env, games=50):
         else:
             draws += 1
 
-    # restore
     agent.epsilon = original_epsilon
     agent.policy_net.train(was_training)
 
@@ -999,8 +816,12 @@ def evaluate_agent(agent, env, games=50):
 
 
 def train(config):
-    """Train the Connect 4 AI"""
+    """Train the TicTacToe AI"""
+    grid_size = config.get('grid_size', 3)
+    win_length = config.get('win_length', 3)
+    
     print("Initializing training...")
+    print(f"Grid size: {grid_size}x{grid_size}, Win length: {win_length}")
     print(f"Configuration: {json.dumps(config, indent=2)}")
     
     # Initialize utilities
@@ -1009,15 +830,15 @@ def train(config):
     early_stopping = EarlyStopping(config)
     
     # Create environment and agent
-    env = Connect4()
-    agent = DQNAgent(config)
+    env = TicTacToe(grid_size=grid_size, win_length=win_length)
+    agent = DQNAgent(config, grid_size=grid_size)
     visualizer = TrainingVisualizer()
 
     # Training settings
     num_episodes = config.get('num_episodes', 1000)
     save_interval = config.get('save_interval', 100)
-    model_path = config.get('model_path', 'connect4_model.pth')
-    warmup_episodes = config.get('warmup_episodes', 1000)
+    model_path = config.get('model_path', 'tictactoe_model.pth')
+    warmup_episodes = config.get('warmup_episodes', 500)
     
     # Evaluation settings
     eval_interval = config.get('eval_interval', 500)
@@ -1025,7 +846,7 @@ def train(config):
     eval_history = deque(maxlen=20)
     
     start_time = time.time()
-    logger.info(f"Starting training with {num_episodes} episodes")
+    logger.info(f"Starting TicTacToe training: {grid_size}x{grid_size}, win_length={win_length}, {num_episodes} episodes")
     
     def _fmt_time(seconds):
         s = int(max(0, seconds))
@@ -1050,11 +871,12 @@ def train(config):
                 valid_moves = env.get_valid_moves()
                 
                 # Agent 1 (learning agent)
-                action = agent.get_action(state, valid_moves)
-                next_state, reward, done, info = env.make_move(action)
+                action_index = agent.get_action(state, valid_moves, win_length=win_length)
+                position = agent._index_to_position(action_index)
+                next_state, reward, done, info = env.make_move(position)
                 
                 # Store experience from agent 1's perspective
-                agent.remember(state, action, reward, next_state, done)
+                agent.remember(state, action_index, reward, next_state, done)
                 total_reward += reward
                 episode_length += 1
                 
@@ -1062,24 +884,23 @@ def train(config):
                     break
                 
                 # Agent 2 (opponent - also the learning agent)
-                # Flip the board perspective for agent 2
                 flipped_state = next_state.copy()
                 flipped_state[flipped_state == 1] = 3
                 flipped_state[flipped_state == 2] = 1
                 flipped_state[flipped_state == 3] = 2
                 
                 valid_moves = env.get_valid_moves()
-                opponent_action = agent.get_action(flipped_state, valid_moves)
-                next_state, opponent_reward, done, info = env.make_move(opponent_action)
+                opponent_action_index = agent.get_action(flipped_state, valid_moves, win_length=win_length)
+                opponent_position = agent._index_to_position(opponent_action_index)
+                next_state, opponent_reward, done, info = env.make_move(opponent_position)
                 
                 # Store experience from agent 2's perspective
-                # Flip next_state for storage
                 flipped_next_state = next_state.copy()
                 flipped_next_state[flipped_next_state == 1] = 3
                 flipped_next_state[flipped_next_state == 2] = 1
                 flipped_next_state[flipped_next_state == 3] = 2
                 
-                agent.remember(flipped_state, opponent_action, opponent_reward, flipped_next_state, done)
+                agent.remember(flipped_state, opponent_action_index, opponent_reward, flipped_next_state, done)
                 
                 # If opponent wins, agent 1 gets negative reward
                 if done and info.get('winner') == 2:
@@ -1137,7 +958,7 @@ def train(config):
             visualizer.update(episode, total_reward, episode_length, avg_loss, info, eval_metrics, current_lr, agent.epsilon)
             
             # Render progress
-            visualizer.render(episode, agent.epsilon, num_episodes, time_info, current_lr)
+            visualizer.render(episode, agent.epsilon, num_episodes, time_info, grid_size, win_length, current_lr)
             
             # Save model periodically
             if (episode + 1) % save_interval == 0:
@@ -1166,26 +987,26 @@ def train(config):
         print(f"Model saved to {model_path}")
 
 
-def play_against_ai(model_path):
-    """Play Connect 4 against the trained AI"""
+def play_against_ai(model_path, grid_size=3, win_length=3):
+    """Play TicTacToe against the trained AI"""
     if not os.path.exists(model_path):
         print(f"Error: Model file '{model_path}' not found.")
         print("Please train a model first using the --train option.")
         return
     
     print("Loading AI model...")
-    env = Connect4()
-    config = {'epsilon_start': 0.0}  # No exploration when playing
-    agent = DQNAgent(config)
+    env = TicTacToe(grid_size=grid_size, win_length=win_length)
+    config = {'epsilon_start': 0.0}
+    agent = DQNAgent(config, grid_size=grid_size)
     agent.load(model_path)
     print("AI model loaded successfully!\n")
     
     print("=" * 60)
-    print("CONNECT 4 - PLAY AGAINST AI")
+    print(f"TICTACTOE ({grid_size}x{grid_size}, win={win_length}) - PLAY AGAINST AI")
     print("=" * 60)
     print("\nYou are 'X' (Player 1)")
     print("AI is 'O' (Player 2)")
-    print("Enter column number (0-6) to make a move\n")
+    print("Enter moves as (row, col) tuples, e.g., (0, 1) or 0,1\n")
     
     while True:
         state = env.reset()
@@ -1201,16 +1022,30 @@ def play_against_ai(model_path):
                 
                 while True:
                     try:
-                        col = int(input("Your move (column 0-6): "))
-                        if col in valid_moves:
+                        move_input = input("Your move (row, col): ").strip()
+                        # Parse different input formats
+                        if ',' in move_input:
+                            if move_input.startswith('(') and move_input.endswith(')'):
+                                move_input = move_input[1:-1]
+                            parts = move_input.split(',')
+                            row, col = int(parts[0].strip()), int(parts[1].strip())
+                        else:
+                            # Single number input
+                            idx = int(move_input)
+                            row, col = divmod(idx, grid_size)
+                        
+                        position = (row, col)
+                        if position in valid_moves:
                             break
                         else:
-                            print("Invalid move. Column is full or out of range.")
+                            print("Invalid move. Position is occupied or out of range.")
                     except (ValueError, KeyboardInterrupt):
                         print("\nExiting game...")
                         return
+                    except Exception as e:
+                        print(f"Invalid input format. Please use (row, col) format. Error: {e}")
                 
-                state, reward, done, info = env.make_move(col)
+                state, reward, done, info = env.make_move(position)
             else:
                 # AI player
                 print("AI is thinking...")
@@ -1223,10 +1058,11 @@ def play_against_ai(model_path):
                 flipped_state[flipped_state == 3] = 2
                 
                 valid_moves = env.get_valid_moves()
-                col = agent.get_action(flipped_state, valid_moves, training=False)
-                print(f"AI plays column: {col}")
+                action_index = agent.get_action(flipped_state, valid_moves, training=False, win_length=win_length)
+                position = agent._index_to_position(action_index)
+                print(f"AI plays position: {position}")
                 
-                state, reward, done, info = env.make_move(col)
+                state, reward, done, info = env.make_move(position)
         
         # Game over
         env.render()
@@ -1256,6 +1092,8 @@ def load_config(config_file):
 def create_default_config(config_file):
     """Create a default configuration file"""
     default_config = {
+        "grid_size": 3,
+        "win_length": 3,
         "num_episodes": 1000,
         "learning_rate": 0.0001,
         "gamma": 0.99,
@@ -1266,38 +1104,43 @@ def create_default_config(config_file):
         "batch_size": 64,
         "target_update": 5,
         "save_interval": 100,
-        "model_path": "connect4_model.pth",
+        "model_path": "tictactoe_model.pth",
         "gradient_clip": 0.5,
         "weight_decay": 1e-4,
         "eval_interval": 500,
         "eval_games": 50,
-        "warmup_episodes": 500,
+        "warmup_episodes": 250,
         "learning_rate_schedule": {
             "enabled": True,
-            "patience": 100,
+            "patience": 50,
             "factor": 0.8,
             "min_lr": 1e-6
         },
         "early_stopping": {
             "enabled": False,
-            "patience": 2000,
+            "patience": 1000,
             "min_delta": 0.01
         },
         "logging": {
             "enabled": True,
-            "log_file": "connect4_training.log",
+            "log_file": "tictactoe_training.log",
             "log_level": "INFO"
         },
         "checkpointing": {
             "enabled": True,
-            "checkpoint_dir": "checkpoints",
+            "checkpoint_dir": "tictactoe_checkpoints",
             "keep_best": True,
             "metric": "win_rate"
         },
         "visualization": {
             "plot_training": False,
             "save_plots": False,
-            "plot_dir": "plots"
+            "plot_dir": "tictactoe_plots"
+        },
+        "tournament": {
+            "enabled": False,
+            "opponents": ["random", "minimax", "heuristic"],
+            "games_per_opponent": 100
         }
     }
     
@@ -1310,27 +1153,30 @@ def create_default_config(config_file):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Connect 4 AI Trainer using Deep Q-Learning",
+        description="TicTacToe AI Trainer using Deep Q-Learning",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Train with default configuration
-  python connect4_ai.py --train
+  # Train with default configuration (3x3, win=3)
+  python tictactoe_ai.py --train
+  
+  # Train 5x5 grid with win length 4
+  python tictactoe_ai.py --train --grid-size 5 --win-length 4
   
   # Train with custom configuration file
-  python connect4_ai.py --train --config my_config.json
+  python tictactoe_ai.py --train --config my_config.json
   
   # Play against trained AI
-  python connect4_ai.py --play
+  python tictactoe_ai.py --play
   
-  # Play against AI with custom model
-  python connect4_ai.py --play --model my_model.pth
+  # Play 4x4 grid with win length 3
+  python tictactoe_ai.py --play --grid-size 4 --win-length 3
   
   # Evaluate trained model
-  python connect4_ai.py --evaluate --model my_model.pth --eval-games 200
+  python tictactoe_ai.py --evaluate --model my_model.pth --grid-size 4 --win-length 3
   
   # Create default configuration file
-  python connect4_ai.py --create-config
+  python tictactoe_ai.py --create-config
         """
     )
     
@@ -1338,10 +1184,14 @@ Examples:
                        help='Train the AI model')
     parser.add_argument('--play', action='store_true',
                        help='Play against the trained AI')
-    parser.add_argument('--config', type=str, default='config.json',
-                       help='Path to configuration file (default: config.json)')
-    parser.add_argument('--model', type=str, default='connect4_model.pth',
-                       help='Path to model file (default: connect4_model.pth)')
+    parser.add_argument('--config', type=str, default='tictactoe_config.json',
+                       help='Path to configuration file (default: tictactoe_config.json)')
+    parser.add_argument('--model', type=str, default='tictactoe_model.pth',
+                       help='Path to model file (default: tictactoe_model.pth)')
+    parser.add_argument('--grid-size', type=int, default=3,
+                       help='Grid size (default: 3 for 3x3)')
+    parser.add_argument('--win-length', type=int, default=3,
+                       help='Win streak length (default: 3)')
     parser.add_argument('--create-config', action='store_true',
                        help='Create a default configuration file')
     parser.add_argument('--evaluate', action='store_true',
@@ -1365,14 +1215,16 @@ Examples:
             print("Creating default configuration...")
             config = create_default_config(args.config)
         
-        # Override model path if specified
-        if args.model != 'connect4_model.pth':
+        # Override with command line arguments
+        config['grid_size'] = args.grid_size
+        config['win_length'] = args.win_length
+        if args.model != 'tictactoe_model.pth':
             config['model_path'] = args.model
         
         train(config)
     
     elif args.play:
-        play_against_ai(args.model)
+        play_against_ai(args.model, args.grid_size, args.win_length)
     
     elif args.evaluate:
         # Evaluate trained model
@@ -1381,11 +1233,11 @@ Examples:
             return
         
         print(f"Loading model from {args.model}")
-        env = Connect4()
-        agent = DQNAgent({'epsilon_start': 0.0})
+        env = TicTacToe(grid_size=args.grid_size, win_length=args.win_length)
+        agent = DQNAgent({'epsilon_start': 0.0}, grid_size=args.grid_size)
         agent.load(args.model)
         
-        print(f"Evaluating model over {args.eval_games} games...")
+        print(f"Evaluating {args.grid_size}x{args.grid_size} (win={args.win_length}) model over {args.eval_games} games...")
         win_rate, draw_rate, loss_rate = evaluate_agent(agent, env, games=args.eval_games)
         
         print(f"\nEvaluation Results:")
