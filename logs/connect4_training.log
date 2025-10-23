@@ -1,0 +1,760 @@
+2025-10-22 22:06:29,139 - training - INFO - Starting training with 500000 episodes
+2025-10-22 22:08:15,962 - training - INFO - Starting training with 500000 episodes
+2025-10-22 22:10:24,138 - training - INFO - Evaluation ep 2000: win=0.630, draw=0.140, loss=0.230
+2025-10-22 22:10:24,351 - training - INFO - Model saved at episode 2000
+2025-10-22 22:10:24,859 - training - INFO - New best model saved: win_rate=0.405
+2025-10-22 22:10:24,859 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep2000_20251022_221024.pth
+2025-10-22 22:12:47,400 - training - INFO - Evaluation ep 4000: win=0.550, draw=0.140, loss=0.310
+2025-10-22 22:12:47,611 - training - INFO - Model saved at episode 4000
+2025-10-22 22:12:48,114 - training - INFO - New best model saved: win_rate=0.460
+2025-10-22 22:12:48,114 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep4000_20251022_221248.pth
+2025-10-22 22:15:20,787 - training - INFO - Evaluation ep 6000: win=0.490, draw=0.190, loss=0.320
+2025-10-22 22:15:21,004 - training - INFO - Model saved at episode 6000
+2025-10-22 22:15:21,515 - training - INFO - New best model saved: win_rate=0.490
+2025-10-22 22:15:21,515 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep6000_20251022_221521.pth
+2025-10-22 22:18:04,688 - training - INFO - Evaluation ep 8000: win=0.580, draw=0.190, loss=0.230
+2025-10-22 22:18:04,901 - training - INFO - Model saved at episode 8000
+2025-10-22 22:18:05,414 - training - INFO - New best model saved: win_rate=0.500
+2025-10-22 22:18:05,414 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep8000_20251022_221805.pth
+2025-10-22 22:21:01,915 - training - INFO - Evaluation ep 10000: win=0.700, draw=0.070, loss=0.230
+2025-10-22 22:21:02,129 - training - INFO - Model saved at episode 10000
+2025-10-22 22:21:02,638 - training - INFO - New best model saved: win_rate=0.535
+2025-10-22 22:21:02,638 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep10000_20251022_222102.pth
+2025-10-22 22:23:44,213 - training - INFO - Evaluation ep 12000: win=0.690, draw=0.110, loss=0.200
+2025-10-22 22:23:44,429 - training - INFO - Model saved at episode 12000
+2025-10-22 22:23:44,934 - training - INFO - New best model saved: win_rate=0.565
+2025-10-22 22:23:44,934 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep12000_20251022_222344.pth
+2025-10-22 22:26:14,518 - training - INFO - Evaluation ep 14000: win=0.560, draw=0.140, loss=0.300
+2025-10-22 22:26:14,732 - training - INFO - Model saved at episode 14000
+2025-10-22 22:26:15,243 - training - INFO - New best model saved: win_rate=0.715
+2025-10-22 22:26:15,243 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep14000_20251022_222615.pth
+2025-10-22 22:28:38,175 - training - INFO - Evaluation ep 16000: win=0.650, draw=0.080, loss=0.270
+2025-10-22 22:28:38,391 - training - INFO - Model saved at episode 16000
+2025-10-22 22:28:38,898 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep16000_20251022_222838.pth
+2025-10-22 22:31:00,634 - training - INFO - Evaluation ep 18000: win=0.590, draw=0.160, loss=0.250
+2025-10-22 22:31:00,847 - training - INFO - Model saved at episode 18000
+2025-10-22 22:31:01,349 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep18000_20251022_223101.pth
+2025-10-22 22:33:30,251 - training - INFO - Evaluation ep 20000: win=0.630, draw=0.140, loss=0.230
+2025-10-22 22:33:30,460 - training - INFO - Model saved at episode 20000
+2025-10-22 22:33:30,971 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep20000_20251022_223330.pth
+2025-10-22 22:35:54,738 - training - INFO - Evaluation ep 22000: win=0.640, draw=0.130, loss=0.230
+2025-10-22 22:35:54,954 - training - INFO - Model saved at episode 22000
+2025-10-22 22:35:55,457 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep22000_20251022_223555.pth
+2025-10-22 22:38:14,040 - training - INFO - Evaluation ep 24000: win=0.620, draw=0.120, loss=0.260
+2025-10-22 22:38:14,256 - training - INFO - Model saved at episode 24000
+2025-10-22 22:38:14,764 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep24000_20251022_223814.pth
+2025-10-22 22:40:20,099 - training - INFO - Evaluation ep 26000: win=0.510, draw=0.170, loss=0.320
+2025-10-22 22:40:20,309 - training - INFO - Model saved at episode 26000
+2025-10-22 22:40:20,817 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep26000_20251022_224020.pth
+2025-10-22 22:42:29,404 - training - INFO - Evaluation ep 28000: win=0.580, draw=0.160, loss=0.260
+2025-10-22 22:42:29,616 - training - INFO - Model saved at episode 28000
+2025-10-22 22:42:30,125 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep28000_20251022_224230.pth
+2025-10-22 22:44:43,824 - training - INFO - Evaluation ep 30000: win=0.590, draw=0.110, loss=0.300
+2025-10-22 22:44:44,032 - training - INFO - Model saved at episode 30000
+2025-10-22 22:44:44,535 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep30000_20251022_224444.pth
+2025-10-22 22:47:03,275 - training - INFO - Evaluation ep 32000: win=0.590, draw=0.070, loss=0.340
+2025-10-22 22:47:03,497 - training - INFO - Model saved at episode 32000
+2025-10-22 22:47:04,002 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep32000_20251022_224704.pth
+2025-10-22 22:49:18,393 - training - INFO - Evaluation ep 34000: win=0.600, draw=0.170, loss=0.230
+2025-10-22 22:49:18,606 - training - INFO - Model saved at episode 34000
+2025-10-22 22:49:19,109 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep34000_20251022_224919.pth
+2025-10-22 22:51:36,246 - training - INFO - Evaluation ep 36000: win=0.660, draw=0.120, loss=0.220
+2025-10-22 22:51:36,459 - training - INFO - Model saved at episode 36000
+2025-10-22 22:51:36,961 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep36000_20251022_225136.pth
+2025-10-22 22:53:57,559 - training - INFO - Evaluation ep 38000: win=0.710, draw=0.070, loss=0.220
+2025-10-22 22:53:57,774 - training - INFO - Model saved at episode 38000
+2025-10-22 22:53:58,276 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep38000_20251022_225358.pth
+2025-10-22 22:56:14,791 - training - INFO - Evaluation ep 40000: win=0.660, draw=0.110, loss=0.230
+2025-10-22 22:56:15,007 - training - INFO - Model saved at episode 40000
+2025-10-22 22:56:15,519 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep40000_20251022_225615.pth
+2025-10-22 22:58:30,732 - training - INFO - Evaluation ep 42000: win=0.650, draw=0.130, loss=0.220
+2025-10-22 22:58:30,940 - training - INFO - Model saved at episode 42000
+2025-10-22 22:58:31,444 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep42000_20251022_225831.pth
+2025-10-22 23:00:44,937 - training - INFO - Evaluation ep 44000: win=0.570, draw=0.150, loss=0.280
+2025-10-22 23:00:45,149 - training - INFO - Model saved at episode 44000
+2025-10-22 23:00:45,664 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep44000_20251022_230045.pth
+2025-10-22 23:03:01,143 - training - INFO - Evaluation ep 46000: win=0.560, draw=0.120, loss=0.320
+2025-10-22 23:03:01,351 - training - INFO - Model saved at episode 46000
+2025-10-22 23:03:01,855 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep46000_20251022_230301.pth
+2025-10-22 23:05:15,508 - training - INFO - Evaluation ep 48000: win=0.590, draw=0.120, loss=0.290
+2025-10-22 23:05:15,717 - training - INFO - Model saved at episode 48000
+2025-10-22 23:05:16,229 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep48000_20251022_230516.pth
+2025-10-22 23:07:27,446 - training - INFO - Evaluation ep 50000: win=0.530, draw=0.180, loss=0.290
+2025-10-22 23:07:27,664 - training - INFO - Model saved at episode 50000
+2025-10-22 23:07:28,178 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep50000_20251022_230728.pth
+2025-10-22 23:09:35,586 - training - INFO - Evaluation ep 52000: win=0.630, draw=0.080, loss=0.290
+2025-10-22 23:09:35,794 - training - INFO - Model saved at episode 52000
+2025-10-22 23:09:36,310 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep52000_20251022_230936.pth
+2025-10-22 23:11:44,020 - training - INFO - Evaluation ep 54000: win=0.650, draw=0.070, loss=0.280
+2025-10-22 23:11:44,237 - training - INFO - Model saved at episode 54000
+2025-10-22 23:11:44,752 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep54000_20251022_231144.pth
+2025-10-22 23:13:53,253 - training - INFO - Evaluation ep 56000: win=0.630, draw=0.130, loss=0.240
+2025-10-22 23:13:53,477 - training - INFO - Model saved at episode 56000
+2025-10-22 23:13:53,980 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep56000_20251022_231353.pth
+2025-10-22 23:16:02,261 - training - INFO - Evaluation ep 58000: win=0.670, draw=0.120, loss=0.210
+2025-10-22 23:16:02,476 - training - INFO - Model saved at episode 58000
+2025-10-22 23:16:02,987 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep58000_20251022_231602.pth
+2025-10-22 23:18:12,537 - training - INFO - Evaluation ep 60000: win=0.690, draw=0.120, loss=0.190
+2025-10-22 23:18:12,744 - training - INFO - Model saved at episode 60000
+2025-10-22 23:18:13,256 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep60000_20251022_231813.pth
+2025-10-22 23:20:19,051 - training - INFO - Evaluation ep 62000: win=0.580, draw=0.150, loss=0.270
+2025-10-22 23:20:19,257 - training - INFO - Model saved at episode 62000
+2025-10-22 23:20:19,765 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep62000_20251022_232019.pth
+2025-10-22 23:22:28,962 - training - INFO - Evaluation ep 64000: win=0.590, draw=0.120, loss=0.290
+2025-10-22 23:22:29,179 - training - INFO - Model saved at episode 64000
+2025-10-22 23:22:29,682 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep64000_20251022_232229.pth
+2025-10-22 23:24:43,307 - training - INFO - Evaluation ep 66000: win=0.610, draw=0.130, loss=0.260
+2025-10-22 23:24:43,516 - training - INFO - Model saved at episode 66000
+2025-10-22 23:24:44,027 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep66000_20251022_232444.pth
+2025-10-22 23:26:50,578 - training - INFO - Evaluation ep 68000: win=0.620, draw=0.120, loss=0.260
+2025-10-22 23:26:50,793 - training - INFO - Model saved at episode 68000
+2025-10-22 23:26:51,305 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep68000_20251022_232651.pth
+2025-10-22 23:29:12,457 - training - INFO - Evaluation ep 70000: win=0.710, draw=0.090, loss=0.200
+2025-10-22 23:29:12,666 - training - INFO - Model saved at episode 70000
+2025-10-22 23:29:13,178 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep70000_20251022_232913.pth
+2025-10-22 23:31:21,538 - training - INFO - Evaluation ep 72000: win=0.700, draw=0.100, loss=0.200
+2025-10-22 23:31:21,748 - training - INFO - Model saved at episode 72000
+2025-10-22 23:31:22,251 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep72000_20251022_233122.pth
+2025-10-22 23:33:31,844 - training - INFO - Evaluation ep 74000: win=0.640, draw=0.100, loss=0.260
+2025-10-22 23:33:32,052 - training - INFO - Model saved at episode 74000
+2025-10-22 23:33:32,559 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep74000_20251022_233332.pth
+2025-10-22 23:35:40,439 - training - INFO - Evaluation ep 76000: win=0.620, draw=0.160, loss=0.220
+2025-10-22 23:35:40,655 - training - INFO - Model saved at episode 76000
+2025-10-22 23:35:41,158 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep76000_20251022_233541.pth
+2025-10-22 23:37:48,619 - training - INFO - Evaluation ep 78000: win=0.550, draw=0.150, loss=0.300
+2025-10-22 23:37:48,828 - training - INFO - Model saved at episode 78000
+2025-10-22 23:37:49,339 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep78000_20251022_233749.pth
+2025-10-22 23:39:56,882 - training - INFO - Evaluation ep 80000: win=0.590, draw=0.150, loss=0.260
+2025-10-22 23:39:57,092 - training - INFO - Model saved at episode 80000
+2025-10-22 23:39:57,604 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep80000_20251022_233957.pth
+2025-10-22 23:42:05,358 - training - INFO - Evaluation ep 82000: win=0.720, draw=0.090, loss=0.190
+2025-10-22 23:42:05,572 - training - INFO - Model saved at episode 82000
+2025-10-22 23:42:06,075 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep82000_20251022_234206.pth
+2025-10-22 23:44:12,139 - training - INFO - Evaluation ep 84000: win=0.560, draw=0.150, loss=0.290
+2025-10-22 23:44:12,354 - training - INFO - Model saved at episode 84000
+2025-10-22 23:44:12,857 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep84000_20251022_234412.pth
+2025-10-22 23:46:18,145 - training - INFO - Evaluation ep 86000: win=0.670, draw=0.080, loss=0.250
+2025-10-22 23:46:18,357 - training - INFO - Model saved at episode 86000
+2025-10-22 23:46:18,866 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep86000_20251022_234618.pth
+2025-10-22 23:48:29,037 - training - INFO - Evaluation ep 88000: win=0.540, draw=0.170, loss=0.290
+2025-10-22 23:48:29,253 - training - INFO - Model saved at episode 88000
+2025-10-22 23:48:29,765 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep88000_20251022_234829.pth
+2025-10-22 23:50:37,656 - training - INFO - Evaluation ep 90000: win=0.720, draw=0.060, loss=0.220
+2025-10-22 23:50:37,873 - training - INFO - Model saved at episode 90000
+2025-10-22 23:50:38,377 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep90000_20251022_235038.pth
+2025-10-22 23:52:46,749 - training - INFO - Evaluation ep 92000: win=0.590, draw=0.170, loss=0.240
+2025-10-22 23:52:46,960 - training - INFO - Model saved at episode 92000
+2025-10-22 23:52:47,463 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep92000_20251022_235247.pth
+2025-10-22 23:54:53,370 - training - INFO - Evaluation ep 94000: win=0.680, draw=0.070, loss=0.250
+2025-10-22 23:54:53,584 - training - INFO - Model saved at episode 94000
+2025-10-22 23:54:54,090 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep94000_20251022_235454.pth
+2025-10-22 23:57:02,325 - training - INFO - Evaluation ep 96000: win=0.550, draw=0.130, loss=0.320
+2025-10-22 23:57:02,535 - training - INFO - Model saved at episode 96000
+2025-10-22 23:57:03,047 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep96000_20251022_235703.pth
+2025-10-22 23:59:10,432 - training - INFO - Evaluation ep 98000: win=0.660, draw=0.060, loss=0.280
+2025-10-22 23:59:10,649 - training - INFO - Model saved at episode 98000
+2025-10-22 23:59:11,153 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep98000_20251022_235911.pth
+2025-10-23 00:01:18,141 - training - INFO - Evaluation ep 100000: win=0.660, draw=0.080, loss=0.260
+2025-10-23 00:01:18,351 - training - INFO - Model saved at episode 100000
+2025-10-23 00:01:18,858 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep100000_20251023_000118.pth
+2025-10-23 00:03:25,618 - training - INFO - Evaluation ep 102000: win=0.760, draw=0.100, loss=0.140
+2025-10-23 00:03:25,830 - training - INFO - Model saved at episode 102000
+2025-10-23 00:03:26,342 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep102000_20251023_000326.pth
+2025-10-23 00:05:37,801 - training - INFO - Evaluation ep 104000: win=0.650, draw=0.110, loss=0.240
+2025-10-23 00:05:38,013 - training - INFO - Model saved at episode 104000
+2025-10-23 00:05:38,525 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep104000_20251023_000538.pth
+2025-10-23 00:07:45,822 - training - INFO - Evaluation ep 106000: win=0.650, draw=0.120, loss=0.230
+2025-10-23 00:07:46,036 - training - INFO - Model saved at episode 106000
+2025-10-23 00:07:46,548 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep106000_20251023_000746.pth
+2025-10-23 00:09:53,798 - training - INFO - Evaluation ep 108000: win=0.620, draw=0.080, loss=0.300
+2025-10-23 00:09:54,015 - training - INFO - Model saved at episode 108000
+2025-10-23 00:09:54,518 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep108000_20251023_000954.pth
+2025-10-23 00:12:02,031 - training - INFO - Evaluation ep 110000: win=0.680, draw=0.120, loss=0.200
+2025-10-23 00:12:02,241 - training - INFO - Model saved at episode 110000
+2025-10-23 00:12:02,751 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep110000_20251023_001202.pth
+2025-10-23 00:14:07,545 - training - INFO - Evaluation ep 112000: win=0.760, draw=0.070, loss=0.170
+2025-10-23 00:14:07,757 - training - INFO - Model saved at episode 112000
+2025-10-23 00:14:08,266 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep112000_20251023_001408.pth
+2025-10-23 00:16:14,792 - training - INFO - Evaluation ep 114000: win=0.550, draw=0.110, loss=0.340
+2025-10-23 00:16:15,009 - training - INFO - Model saved at episode 114000
+2025-10-23 00:16:15,512 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep114000_20251023_001615.pth
+2025-10-23 00:18:20,726 - training - INFO - Evaluation ep 116000: win=0.640, draw=0.130, loss=0.230
+2025-10-23 00:18:20,943 - training - INFO - Model saved at episode 116000
+2025-10-23 00:18:21,446 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep116000_20251023_001821.pth
+2025-10-23 00:20:27,648 - training - INFO - Evaluation ep 118000: win=0.540, draw=0.210, loss=0.250
+2025-10-23 00:20:27,860 - training - INFO - Model saved at episode 118000
+2025-10-23 00:20:28,370 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep118000_20251023_002028.pth
+2025-10-23 00:22:34,356 - training - INFO - Evaluation ep 120000: win=0.620, draw=0.130, loss=0.250
+2025-10-23 00:22:34,567 - training - INFO - Model saved at episode 120000
+2025-10-23 00:22:35,077 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep120000_20251023_002235.pth
+2025-10-23 00:24:42,916 - training - INFO - Evaluation ep 122000: win=0.690, draw=0.140, loss=0.170
+2025-10-23 00:24:43,132 - training - INFO - Model saved at episode 122000
+2025-10-23 00:24:43,634 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep122000_20251023_002443.pth
+2025-10-23 00:26:21,838 - training - INFO - Evaluation ep 124000: win=0.540, draw=0.180, loss=0.280
+2025-10-23 00:26:22,065 - training - INFO - Model saved at episode 124000
+2025-10-23 00:26:22,572 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep124000_20251023_002622.pth
+2025-10-23 00:28:00,405 - training - INFO - Evaluation ep 126000: win=0.610, draw=0.140, loss=0.250
+2025-10-23 00:28:00,633 - training - INFO - Model saved at episode 126000
+2025-10-23 00:28:01,145 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep126000_20251023_002801.pth
+2025-10-23 00:29:38,817 - training - INFO - Evaluation ep 128000: win=0.710, draw=0.070, loss=0.220
+2025-10-23 00:29:39,047 - training - INFO - Model saved at episode 128000
+2025-10-23 00:29:39,562 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep128000_20251023_002939.pth
+2025-10-23 00:31:16,852 - training - INFO - Evaluation ep 130000: win=0.640, draw=0.180, loss=0.180
+2025-10-23 00:31:17,078 - training - INFO - Model saved at episode 130000
+2025-10-23 00:31:17,587 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep130000_20251023_003117.pth
+2025-10-23 00:32:54,125 - training - INFO - Evaluation ep 132000: win=0.650, draw=0.160, loss=0.190
+2025-10-23 00:32:54,354 - training - INFO - Model saved at episode 132000
+2025-10-23 00:32:54,869 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep132000_20251023_003254.pth
+2025-10-23 00:34:32,946 - training - INFO - Evaluation ep 134000: win=0.650, draw=0.100, loss=0.250
+2025-10-23 00:34:33,173 - training - INFO - Model saved at episode 134000
+2025-10-23 00:34:33,688 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep134000_20251023_003433.pth
+2025-10-23 00:36:11,646 - training - INFO - Evaluation ep 136000: win=0.710, draw=0.090, loss=0.200
+2025-10-23 00:36:11,867 - training - INFO - Model saved at episode 136000
+2025-10-23 00:36:12,382 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep136000_20251023_003612.pth
+2025-10-23 00:37:49,978 - training - INFO - Evaluation ep 138000: win=0.670, draw=0.070, loss=0.260
+2025-10-23 00:37:50,204 - training - INFO - Model saved at episode 138000
+2025-10-23 00:37:50,719 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep138000_20251023_003750.pth
+2025-10-23 00:39:28,872 - training - INFO - Evaluation ep 140000: win=0.540, draw=0.130, loss=0.330
+2025-10-23 00:39:29,099 - training - INFO - Model saved at episode 140000
+2025-10-23 00:39:29,615 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep140000_20251023_003929.pth
+2025-10-23 00:41:08,473 - training - INFO - Evaluation ep 142000: win=0.620, draw=0.150, loss=0.230
+2025-10-23 00:41:08,710 - training - INFO - Model saved at episode 142000
+2025-10-23 00:41:09,220 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep142000_20251023_004109.pth
+2025-10-23 00:42:48,056 - training - INFO - Evaluation ep 144000: win=0.650, draw=0.150, loss=0.200
+2025-10-23 00:42:48,281 - training - INFO - Model saved at episode 144000
+2025-10-23 00:42:48,797 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep144000_20251023_004248.pth
+2025-10-23 00:44:27,070 - training - INFO - Evaluation ep 146000: win=0.650, draw=0.140, loss=0.210
+2025-10-23 00:44:27,289 - training - INFO - Model saved at episode 146000
+2025-10-23 00:44:27,805 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep146000_20251023_004427.pth
+2025-10-23 00:46:05,611 - training - INFO - Evaluation ep 148000: win=0.700, draw=0.070, loss=0.230
+2025-10-23 00:46:05,839 - training - INFO - Model saved at episode 148000
+2025-10-23 00:46:06,348 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep148000_20251023_004606.pth
+2025-10-23 00:47:45,287 - training - INFO - Evaluation ep 150000: win=0.660, draw=0.150, loss=0.190
+2025-10-23 00:47:45,513 - training - INFO - Model saved at episode 150000
+2025-10-23 00:47:46,026 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep150000_20251023_004746.pth
+2025-10-23 00:49:24,091 - training - INFO - Evaluation ep 152000: win=0.640, draw=0.070, loss=0.290
+2025-10-23 00:49:24,317 - training - INFO - Model saved at episode 152000
+2025-10-23 00:49:24,828 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep152000_20251023_004924.pth
+2025-10-23 00:51:02,357 - training - INFO - Evaluation ep 154000: win=0.540, draw=0.150, loss=0.310
+2025-10-23 00:51:02,573 - training - INFO - Model saved at episode 154000
+2025-10-23 00:51:03,088 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep154000_20251023_005103.pth
+2025-10-23 00:52:41,217 - training - INFO - Evaluation ep 156000: win=0.660, draw=0.140, loss=0.200
+2025-10-23 00:52:41,443 - training - INFO - Model saved at episode 156000
+2025-10-23 00:52:41,959 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep156000_20251023_005241.pth
+2025-10-23 00:54:19,943 - training - INFO - Evaluation ep 158000: win=0.580, draw=0.090, loss=0.330
+2025-10-23 00:54:20,164 - training - INFO - Model saved at episode 158000
+2025-10-23 00:54:20,673 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep158000_20251023_005420.pth
+2025-10-23 00:55:58,165 - training - INFO - Evaluation ep 160000: win=0.630, draw=0.100, loss=0.270
+2025-10-23 00:55:58,391 - training - INFO - Model saved at episode 160000
+2025-10-23 00:55:58,905 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep160000_20251023_005558.pth
+2025-10-23 00:57:37,374 - training - INFO - Evaluation ep 162000: win=0.600, draw=0.160, loss=0.240
+2025-10-23 00:57:37,601 - training - INFO - Model saved at episode 162000
+2025-10-23 00:57:38,116 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep162000_20251023_005738.pth
+2025-10-23 00:59:16,544 - training - INFO - Evaluation ep 164000: win=0.570, draw=0.140, loss=0.290
+2025-10-23 00:59:16,772 - training - INFO - Model saved at episode 164000
+2025-10-23 00:59:17,288 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep164000_20251023_005917.pth
+2025-10-23 01:00:55,196 - training - INFO - Evaluation ep 166000: win=0.630, draw=0.100, loss=0.270
+2025-10-23 01:00:55,421 - training - INFO - Model saved at episode 166000
+2025-10-23 01:00:55,937 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep166000_20251023_010055.pth
+2025-10-23 01:02:32,633 - training - INFO - Evaluation ep 168000: win=0.660, draw=0.140, loss=0.200
+2025-10-23 01:02:32,860 - training - INFO - Model saved at episode 168000
+2025-10-23 01:02:33,376 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep168000_20251023_010233.pth
+2025-10-23 01:04:10,816 - training - INFO - Evaluation ep 170000: win=0.590, draw=0.160, loss=0.250
+2025-10-23 01:04:11,044 - training - INFO - Model saved at episode 170000
+2025-10-23 01:04:11,553 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep170000_20251023_010411.pth
+2025-10-23 01:05:48,137 - training - INFO - Evaluation ep 172000: win=0.590, draw=0.110, loss=0.300
+2025-10-23 01:05:48,359 - training - INFO - Model saved at episode 172000
+2025-10-23 01:05:48,875 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep172000_20251023_010548.pth
+2025-10-23 01:07:25,904 - training - INFO - Evaluation ep 174000: win=0.660, draw=0.130, loss=0.210
+2025-10-23 01:07:26,130 - training - INFO - Model saved at episode 174000
+2025-10-23 01:07:26,643 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep174000_20251023_010726.pth
+2025-10-23 01:09:04,696 - training - INFO - Evaluation ep 176000: win=0.660, draw=0.150, loss=0.190
+2025-10-23 01:09:04,921 - training - INFO - Model saved at episode 176000
+2025-10-23 01:09:05,437 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep176000_20251023_010905.pth
+2025-10-23 01:10:43,983 - training - INFO - Evaluation ep 178000: win=0.680, draw=0.130, loss=0.190
+2025-10-23 01:10:44,208 - training - INFO - Model saved at episode 178000
+2025-10-23 01:10:44,723 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep178000_20251023_011044.pth
+2025-10-23 01:12:22,230 - training - INFO - Evaluation ep 180000: win=0.570, draw=0.090, loss=0.340
+2025-10-23 01:12:22,457 - training - INFO - Model saved at episode 180000
+2025-10-23 01:12:22,973 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep180000_20251023_011222.pth
+2025-10-23 01:14:01,187 - training - INFO - Evaluation ep 182000: win=0.730, draw=0.120, loss=0.150
+2025-10-23 01:14:01,412 - training - INFO - Model saved at episode 182000
+2025-10-23 01:14:01,922 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep182000_20251023_011401.pth
+2025-10-23 01:15:40,162 - training - INFO - Evaluation ep 184000: win=0.620, draw=0.130, loss=0.250
+2025-10-23 01:15:40,385 - training - INFO - Model saved at episode 184000
+2025-10-23 01:15:40,901 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep184000_20251023_011540.pth
+2025-10-23 01:17:19,398 - training - INFO - Evaluation ep 186000: win=0.600, draw=0.090, loss=0.310
+2025-10-23 01:17:19,624 - training - INFO - Model saved at episode 186000
+2025-10-23 01:17:20,140 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep186000_20251023_011720.pth
+2025-10-23 01:18:58,405 - training - INFO - Evaluation ep 188000: win=0.630, draw=0.150, loss=0.220
+2025-10-23 01:18:58,625 - training - INFO - Model saved at episode 188000
+2025-10-23 01:18:59,140 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep188000_20251023_011859.pth
+2025-10-23 01:20:37,370 - training - INFO - Evaluation ep 190000: win=0.500, draw=0.140, loss=0.360
+2025-10-23 01:20:37,597 - training - INFO - Model saved at episode 190000
+2025-10-23 01:20:38,109 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep190000_20251023_012038.pth
+2025-10-23 01:22:16,221 - training - INFO - Evaluation ep 192000: win=0.530, draw=0.120, loss=0.350
+2025-10-23 01:22:16,445 - training - INFO - Model saved at episode 192000
+2025-10-23 01:22:16,961 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep192000_20251023_012216.pth
+2025-10-23 01:23:55,959 - training - INFO - Evaluation ep 194000: win=0.610, draw=0.130, loss=0.260
+2025-10-23 01:23:56,186 - training - INFO - Model saved at episode 194000
+2025-10-23 01:23:56,702 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep194000_20251023_012356.pth
+2025-10-23 01:25:35,551 - training - INFO - Evaluation ep 196000: win=0.570, draw=0.170, loss=0.260
+2025-10-23 01:25:35,777 - training - INFO - Model saved at episode 196000
+2025-10-23 01:25:36,293 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep196000_20251023_012536.pth
+2025-10-23 01:27:14,294 - training - INFO - Evaluation ep 198000: win=0.580, draw=0.130, loss=0.290
+2025-10-23 01:27:14,521 - training - INFO - Model saved at episode 198000
+2025-10-23 01:27:15,036 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep198000_20251023_012715.pth
+2025-10-23 01:28:53,208 - training - INFO - Evaluation ep 200000: win=0.670, draw=0.090, loss=0.240
+2025-10-23 01:28:53,435 - training - INFO - Model saved at episode 200000
+2025-10-23 01:28:53,948 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep200000_20251023_012853.pth
+2025-10-23 01:30:32,256 - training - INFO - Evaluation ep 202000: win=0.660, draw=0.110, loss=0.230
+2025-10-23 01:30:32,484 - training - INFO - Model saved at episode 202000
+2025-10-23 01:30:32,997 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep202000_20251023_013032.pth
+2025-10-23 01:32:10,183 - training - INFO - Evaluation ep 204000: win=0.650, draw=0.040, loss=0.310
+2025-10-23 01:32:10,442 - training - INFO - Model saved at episode 204000
+2025-10-23 01:32:10,959 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep204000_20251023_013210.pth
+2025-10-23 01:33:48,840 - training - INFO - Evaluation ep 206000: win=0.650, draw=0.140, loss=0.210
+2025-10-23 01:33:49,068 - training - INFO - Model saved at episode 206000
+2025-10-23 01:33:49,581 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep206000_20251023_013349.pth
+2025-10-23 01:35:27,578 - training - INFO - Evaluation ep 208000: win=0.610, draw=0.110, loss=0.280
+2025-10-23 01:35:27,804 - training - INFO - Model saved at episode 208000
+2025-10-23 01:35:28,320 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep208000_20251023_013528.pth
+2025-10-23 01:37:05,926 - training - INFO - Evaluation ep 210000: win=0.700, draw=0.110, loss=0.190
+2025-10-23 01:37:06,153 - training - INFO - Model saved at episode 210000
+2025-10-23 01:37:06,662 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep210000_20251023_013706.pth
+2025-10-23 01:38:44,264 - training - INFO - Evaluation ep 212000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 01:38:44,491 - training - INFO - Model saved at episode 212000
+2025-10-23 01:38:44,999 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep212000_20251023_013844.pth
+2025-10-23 01:40:22,462 - training - INFO - Evaluation ep 214000: win=0.590, draw=0.120, loss=0.290
+2025-10-23 01:40:22,687 - training - INFO - Model saved at episode 214000
+2025-10-23 01:40:23,202 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep214000_20251023_014023.pth
+2025-10-23 01:42:01,120 - training - INFO - Evaluation ep 216000: win=0.590, draw=0.150, loss=0.260
+2025-10-23 01:42:01,348 - training - INFO - Model saved at episode 216000
+2025-10-23 01:42:01,864 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep216000_20251023_014201.pth
+2025-10-23 01:43:39,879 - training - INFO - Evaluation ep 218000: win=0.660, draw=0.060, loss=0.280
+2025-10-23 01:43:40,100 - training - INFO - Model saved at episode 218000
+2025-10-23 01:43:40,615 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep218000_20251023_014340.pth
+2025-10-23 01:45:18,312 - training - INFO - Evaluation ep 220000: win=0.660, draw=0.080, loss=0.260
+2025-10-23 01:45:18,541 - training - INFO - Model saved at episode 220000
+2025-10-23 01:45:19,050 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep220000_20251023_014519.pth
+2025-10-23 01:46:56,637 - training - INFO - Evaluation ep 222000: win=0.650, draw=0.140, loss=0.210
+2025-10-23 01:46:56,864 - training - INFO - Model saved at episode 222000
+2025-10-23 01:46:57,380 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep222000_20251023_014657.pth
+2025-10-23 01:48:36,179 - training - INFO - Evaluation ep 224000: win=0.670, draw=0.120, loss=0.210
+2025-10-23 01:48:36,403 - training - INFO - Model saved at episode 224000
+2025-10-23 01:48:36,912 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep224000_20251023_014836.pth
+2025-10-23 01:50:14,214 - training - INFO - Evaluation ep 226000: win=0.660, draw=0.120, loss=0.220
+2025-10-23 01:50:14,440 - training - INFO - Model saved at episode 226000
+2025-10-23 01:50:14,955 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep226000_20251023_015014.pth
+2025-10-23 01:51:52,631 - training - INFO - Evaluation ep 228000: win=0.640, draw=0.100, loss=0.260
+2025-10-23 01:51:52,857 - training - INFO - Model saved at episode 228000
+2025-10-23 01:51:53,363 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep228000_20251023_015153.pth
+2025-10-23 01:53:30,871 - training - INFO - Evaluation ep 230000: win=0.600, draw=0.110, loss=0.290
+2025-10-23 01:53:31,099 - training - INFO - Model saved at episode 230000
+2025-10-23 01:53:31,614 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep230000_20251023_015331.pth
+2025-10-23 01:55:09,846 - training - INFO - Evaluation ep 232000: win=0.620, draw=0.150, loss=0.230
+2025-10-23 01:55:10,072 - training - INFO - Model saved at episode 232000
+2025-10-23 01:55:10,584 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep232000_20251023_015510.pth
+2025-10-23 01:56:48,587 - training - INFO - Evaluation ep 234000: win=0.620, draw=0.200, loss=0.180
+2025-10-23 01:56:48,813 - training - INFO - Model saved at episode 234000
+2025-10-23 01:56:49,324 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep234000_20251023_015649.pth
+2025-10-23 01:58:27,118 - training - INFO - Evaluation ep 236000: win=0.630, draw=0.140, loss=0.230
+2025-10-23 01:58:27,344 - training - INFO - Model saved at episode 236000
+2025-10-23 01:58:27,860 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep236000_20251023_015827.pth
+2025-10-23 02:00:05,354 - training - INFO - Evaluation ep 238000: win=0.580, draw=0.160, loss=0.260
+2025-10-23 02:00:05,582 - training - INFO - Model saved at episode 238000
+2025-10-23 02:00:06,098 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep238000_20251023_020006.pth
+2025-10-23 02:01:43,485 - training - INFO - Evaluation ep 240000: win=0.620, draw=0.190, loss=0.190
+2025-10-23 02:01:43,711 - training - INFO - Model saved at episode 240000
+2025-10-23 02:01:44,226 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep240000_20251023_020144.pth
+2025-10-23 02:03:21,055 - training - INFO - Evaluation ep 242000: win=0.630, draw=0.130, loss=0.240
+2025-10-23 02:03:21,282 - training - INFO - Model saved at episode 242000
+2025-10-23 02:03:21,797 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep242000_20251023_020321.pth
+2025-10-23 02:04:58,662 - training - INFO - Evaluation ep 244000: win=0.740, draw=0.100, loss=0.160
+2025-10-23 02:04:58,888 - training - INFO - Model saved at episode 244000
+2025-10-23 02:04:59,404 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep244000_20251023_020459.pth
+2025-10-23 02:06:37,042 - training - INFO - Evaluation ep 246000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 02:06:37,269 - training - INFO - Model saved at episode 246000
+2025-10-23 02:06:37,775 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep246000_20251023_020637.pth
+2025-10-23 02:08:15,174 - training - INFO - Evaluation ep 248000: win=0.680, draw=0.150, loss=0.170
+2025-10-23 02:08:15,401 - training - INFO - Model saved at episode 248000
+2025-10-23 02:08:15,917 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep248000_20251023_020815.pth
+2025-10-23 02:09:53,404 - training - INFO - Evaluation ep 250000: win=0.520, draw=0.140, loss=0.340
+2025-10-23 02:09:53,631 - training - INFO - Model saved at episode 250000
+2025-10-23 02:09:54,140 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep250000_20251023_020954.pth
+2025-10-23 02:11:32,088 - training - INFO - Evaluation ep 252000: win=0.550, draw=0.190, loss=0.260
+2025-10-23 02:11:32,316 - training - INFO - Model saved at episode 252000
+2025-10-23 02:11:32,829 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep252000_20251023_021132.pth
+2025-10-23 02:13:10,777 - training - INFO - Evaluation ep 254000: win=0.600, draw=0.170, loss=0.230
+2025-10-23 02:13:11,005 - training - INFO - Model saved at episode 254000
+2025-10-23 02:13:11,516 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep254000_20251023_021311.pth
+2025-10-23 02:14:48,982 - training - INFO - Evaluation ep 256000: win=0.680, draw=0.110, loss=0.210
+2025-10-23 02:14:49,209 - training - INFO - Model saved at episode 256000
+2025-10-23 02:14:49,717 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep256000_20251023_021449.pth
+2025-10-23 02:16:27,142 - training - INFO - Evaluation ep 258000: win=0.680, draw=0.120, loss=0.200
+2025-10-23 02:16:27,369 - training - INFO - Model saved at episode 258000
+2025-10-23 02:16:27,884 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep258000_20251023_021627.pth
+2025-10-23 02:18:05,265 - training - INFO - Evaluation ep 260000: win=0.640, draw=0.090, loss=0.270
+2025-10-23 02:18:05,491 - training - INFO - Model saved at episode 260000
+2025-10-23 02:18:06,002 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep260000_20251023_021805.pth
+2025-10-23 02:19:43,380 - training - INFO - Evaluation ep 262000: win=0.650, draw=0.120, loss=0.230
+2025-10-23 02:19:43,607 - training - INFO - Model saved at episode 262000
+2025-10-23 02:19:44,123 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep262000_20251023_021944.pth
+2025-10-23 02:21:21,036 - training - INFO - Evaluation ep 264000: win=0.610, draw=0.110, loss=0.280
+2025-10-23 02:21:21,263 - training - INFO - Model saved at episode 264000
+2025-10-23 02:21:21,776 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep264000_20251023_022121.pth
+2025-10-23 02:22:59,570 - training - INFO - Evaluation ep 266000: win=0.690, draw=0.090, loss=0.220
+2025-10-23 02:22:59,795 - training - INFO - Model saved at episode 266000
+2025-10-23 02:23:00,308 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep266000_20251023_022300.pth
+2025-10-23 02:24:37,874 - training - INFO - Evaluation ep 268000: win=0.650, draw=0.130, loss=0.220
+2025-10-23 02:24:38,093 - training - INFO - Model saved at episode 268000
+2025-10-23 02:24:38,609 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep268000_20251023_022438.pth
+2025-10-23 02:26:16,055 - training - INFO - Evaluation ep 270000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 02:26:16,284 - training - INFO - Model saved at episode 270000
+2025-10-23 02:26:16,799 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep270000_20251023_022616.pth
+2025-10-23 02:27:54,967 - training - INFO - Evaluation ep 272000: win=0.650, draw=0.090, loss=0.260
+2025-10-23 02:27:55,194 - training - INFO - Model saved at episode 272000
+2025-10-23 02:27:55,710 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep272000_20251023_022755.pth
+2025-10-23 02:29:33,438 - training - INFO - Evaluation ep 274000: win=0.620, draw=0.140, loss=0.240
+2025-10-23 02:29:33,665 - training - INFO - Model saved at episode 274000
+2025-10-23 02:29:34,177 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep274000_20251023_022934.pth
+2025-10-23 02:31:12,118 - training - INFO - Evaluation ep 276000: win=0.560, draw=0.160, loss=0.280
+2025-10-23 02:31:12,347 - training - INFO - Model saved at episode 276000
+2025-10-23 02:31:12,860 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep276000_20251023_023112.pth
+2025-10-23 02:32:50,427 - training - INFO - Evaluation ep 278000: win=0.590, draw=0.120, loss=0.290
+2025-10-23 02:32:50,661 - training - INFO - Model saved at episode 278000
+2025-10-23 02:32:51,176 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep278000_20251023_023251.pth
+2025-10-23 02:34:28,579 - training - INFO - Evaluation ep 280000: win=0.610, draw=0.100, loss=0.290
+2025-10-23 02:34:28,805 - training - INFO - Model saved at episode 280000
+2025-10-23 02:34:29,321 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep280000_20251023_023429.pth
+2025-10-23 02:36:06,470 - training - INFO - Evaluation ep 282000: win=0.650, draw=0.130, loss=0.220
+2025-10-23 02:36:06,697 - training - INFO - Model saved at episode 282000
+2025-10-23 02:36:07,210 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep282000_20251023_023607.pth
+2025-10-23 02:37:43,994 - training - INFO - Evaluation ep 284000: win=0.670, draw=0.100, loss=0.230
+2025-10-23 02:37:44,220 - training - INFO - Model saved at episode 284000
+2025-10-23 02:37:44,735 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep284000_20251023_023744.pth
+2025-10-23 02:39:22,485 - training - INFO - Evaluation ep 286000: win=0.670, draw=0.090, loss=0.240
+2025-10-23 02:39:22,713 - training - INFO - Model saved at episode 286000
+2025-10-23 02:39:23,227 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep286000_20251023_023923.pth
+2025-10-23 02:41:01,131 - training - INFO - Evaluation ep 288000: win=0.630, draw=0.120, loss=0.250
+2025-10-23 02:41:01,358 - training - INFO - Model saved at episode 288000
+2025-10-23 02:41:01,873 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep288000_20251023_024101.pth
+2025-10-23 02:42:38,787 - training - INFO - Evaluation ep 290000: win=0.650, draw=0.110, loss=0.240
+2025-10-23 02:42:39,014 - training - INFO - Model saved at episode 290000
+2025-10-23 02:42:39,524 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep290000_20251023_024239.pth
+2025-10-23 02:44:17,952 - training - INFO - Evaluation ep 292000: win=0.590, draw=0.140, loss=0.270
+2025-10-23 02:44:18,183 - training - INFO - Model saved at episode 292000
+2025-10-23 02:44:18,734 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep292000_20251023_024418.pth
+2025-10-23 02:45:57,261 - training - INFO - Evaluation ep 294000: win=0.590, draw=0.160, loss=0.250
+2025-10-23 02:45:57,488 - training - INFO - Model saved at episode 294000
+2025-10-23 02:45:57,998 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep294000_20251023_024557.pth
+2025-10-23 02:47:35,645 - training - INFO - Evaluation ep 296000: win=0.580, draw=0.120, loss=0.300
+2025-10-23 02:47:35,875 - training - INFO - Model saved at episode 296000
+2025-10-23 02:47:36,388 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep296000_20251023_024736.pth
+2025-10-23 02:49:14,101 - training - INFO - Evaluation ep 298000: win=0.650, draw=0.090, loss=0.260
+2025-10-23 02:49:14,328 - training - INFO - Model saved at episode 298000
+2025-10-23 02:49:14,842 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep298000_20251023_024914.pth
+2025-10-23 02:50:52,863 - training - INFO - Evaluation ep 300000: win=0.650, draw=0.150, loss=0.200
+2025-10-23 02:50:53,089 - training - INFO - Model saved at episode 300000
+2025-10-23 02:50:53,605 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep300000_20251023_025053.pth
+2025-10-23 02:52:30,569 - training - INFO - Evaluation ep 302000: win=0.660, draw=0.080, loss=0.260
+2025-10-23 02:52:30,796 - training - INFO - Model saved at episode 302000
+2025-10-23 02:52:31,306 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep302000_20251023_025231.pth
+2025-10-23 02:54:09,524 - training - INFO - Evaluation ep 304000: win=0.700, draw=0.150, loss=0.150
+2025-10-23 02:54:09,751 - training - INFO - Model saved at episode 304000
+2025-10-23 02:54:10,265 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep304000_20251023_025410.pth
+2025-10-23 02:55:47,538 - training - INFO - Evaluation ep 306000: win=0.640, draw=0.150, loss=0.210
+2025-10-23 02:55:47,766 - training - INFO - Model saved at episode 306000
+2025-10-23 02:55:48,276 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep306000_20251023_025548.pth
+2025-10-23 02:57:25,254 - training - INFO - Evaluation ep 308000: win=0.630, draw=0.180, loss=0.190
+2025-10-23 02:57:25,481 - training - INFO - Model saved at episode 308000
+2025-10-23 02:57:25,989 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep308000_20251023_025725.pth
+2025-10-23 02:59:03,236 - training - INFO - Evaluation ep 310000: win=0.640, draw=0.160, loss=0.200
+2025-10-23 02:59:03,464 - training - INFO - Model saved at episode 310000
+2025-10-23 02:59:03,980 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep310000_20251023_025903.pth
+2025-10-23 03:00:41,313 - training - INFO - Evaluation ep 312000: win=0.610, draw=0.120, loss=0.270
+2025-10-23 03:00:41,541 - training - INFO - Model saved at episode 312000
+2025-10-23 03:00:42,057 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep312000_20251023_030042.pth
+2025-10-23 03:02:19,743 - training - INFO - Evaluation ep 314000: win=0.630, draw=0.170, loss=0.200
+2025-10-23 03:02:19,968 - training - INFO - Model saved at episode 314000
+2025-10-23 03:02:20,486 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep314000_20251023_030220.pth
+2025-10-23 03:03:57,413 - training - INFO - Evaluation ep 316000: win=0.520, draw=0.190, loss=0.290
+2025-10-23 03:03:57,639 - training - INFO - Model saved at episode 316000
+2025-10-23 03:03:58,153 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep316000_20251023_030358.pth
+2025-10-23 03:05:35,253 - training - INFO - Evaluation ep 318000: win=0.560, draw=0.130, loss=0.310
+2025-10-23 03:05:35,479 - training - INFO - Model saved at episode 318000
+2025-10-23 03:05:35,995 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep318000_20251023_030535.pth
+2025-10-23 03:07:12,773 - training - INFO - Evaluation ep 320000: win=0.650, draw=0.090, loss=0.260
+2025-10-23 03:07:12,999 - training - INFO - Model saved at episode 320000
+2025-10-23 03:07:13,515 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep320000_20251023_030713.pth
+2025-10-23 03:08:50,525 - training - INFO - Evaluation ep 322000: win=0.610, draw=0.120, loss=0.270
+2025-10-23 03:08:50,751 - training - INFO - Model saved at episode 322000
+2025-10-23 03:08:51,267 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep322000_20251023_030851.pth
+2025-10-23 03:10:28,098 - training - INFO - Evaluation ep 324000: win=0.550, draw=0.170, loss=0.280
+2025-10-23 03:10:28,326 - training - INFO - Model saved at episode 324000
+2025-10-23 03:10:28,841 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep324000_20251023_031028.pth
+2025-10-23 03:12:07,106 - training - INFO - Evaluation ep 326000: win=0.580, draw=0.130, loss=0.290
+2025-10-23 03:12:07,332 - training - INFO - Model saved at episode 326000
+2025-10-23 03:12:07,848 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep326000_20251023_031207.pth
+2025-10-23 03:13:45,527 - training - INFO - Evaluation ep 328000: win=0.560, draw=0.180, loss=0.260
+2025-10-23 03:13:45,754 - training - INFO - Model saved at episode 328000
+2025-10-23 03:13:46,270 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep328000_20251023_031346.pth
+2025-10-23 03:15:24,182 - training - INFO - Evaluation ep 330000: win=0.720, draw=0.110, loss=0.170
+2025-10-23 03:15:24,407 - training - INFO - Model saved at episode 330000
+2025-10-23 03:15:24,920 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep330000_20251023_031524.pth
+2025-10-23 03:17:02,126 - training - INFO - Evaluation ep 332000: win=0.590, draw=0.180, loss=0.230
+2025-10-23 03:17:02,353 - training - INFO - Model saved at episode 332000
+2025-10-23 03:17:02,869 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep332000_20251023_031702.pth
+2025-10-23 03:18:41,372 - training - INFO - Evaluation ep 334000: win=0.580, draw=0.150, loss=0.270
+2025-10-23 03:18:41,599 - training - INFO - Model saved at episode 334000
+2025-10-23 03:18:42,113 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep334000_20251023_031842.pth
+2025-10-23 03:20:18,865 - training - INFO - Evaluation ep 336000: win=0.680, draw=0.170, loss=0.150
+2025-10-23 03:20:19,091 - training - INFO - Model saved at episode 336000
+2025-10-23 03:20:19,599 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep336000_20251023_032019.pth
+2025-10-23 03:21:57,286 - training - INFO - Evaluation ep 338000: win=0.580, draw=0.140, loss=0.280
+2025-10-23 03:21:57,512 - training - INFO - Model saved at episode 338000
+2025-10-23 03:21:58,027 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep338000_20251023_032158.pth
+2025-10-23 03:23:35,822 - training - INFO - Evaluation ep 340000: win=0.580, draw=0.190, loss=0.230
+2025-10-23 03:23:36,049 - training - INFO - Model saved at episode 340000
+2025-10-23 03:23:36,557 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep340000_20251023_032336.pth
+2025-10-23 03:25:15,027 - training - INFO - Evaluation ep 342000: win=0.590, draw=0.140, loss=0.270
+2025-10-23 03:25:15,253 - training - INFO - Model saved at episode 342000
+2025-10-23 03:25:15,768 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep342000_20251023_032515.pth
+2025-10-23 03:26:53,981 - training - INFO - Evaluation ep 344000: win=0.610, draw=0.150, loss=0.240
+2025-10-23 03:26:54,207 - training - INFO - Model saved at episode 344000
+2025-10-23 03:26:54,722 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep344000_20251023_032654.pth
+2025-10-23 03:28:32,300 - training - INFO - Evaluation ep 346000: win=0.560, draw=0.140, loss=0.300
+2025-10-23 03:28:32,527 - training - INFO - Model saved at episode 346000
+2025-10-23 03:28:33,043 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep346000_20251023_032833.pth
+2025-10-23 03:30:10,952 - training - INFO - Evaluation ep 348000: win=0.620, draw=0.120, loss=0.260
+2025-10-23 03:30:11,177 - training - INFO - Model saved at episode 348000
+2025-10-23 03:30:11,685 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep348000_20251023_033011.pth
+2025-10-23 03:31:49,587 - training - INFO - Evaluation ep 350000: win=0.620, draw=0.190, loss=0.190
+2025-10-23 03:31:49,813 - training - INFO - Model saved at episode 350000
+2025-10-23 03:31:50,322 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep350000_20251023_033150.pth
+2025-10-23 03:33:27,832 - training - INFO - Evaluation ep 352000: win=0.680, draw=0.070, loss=0.250
+2025-10-23 03:33:28,057 - training - INFO - Model saved at episode 352000
+2025-10-23 03:33:28,572 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep352000_20251023_033328.pth
+2025-10-23 03:35:05,274 - training - INFO - Evaluation ep 354000: win=0.640, draw=0.120, loss=0.240
+2025-10-23 03:35:05,484 - training - INFO - Model saved at episode 354000
+2025-10-23 03:35:06,000 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep354000_20251023_033505.pth
+2025-10-23 03:36:43,425 - training - INFO - Evaluation ep 356000: win=0.680, draw=0.070, loss=0.250
+2025-10-23 03:36:43,651 - training - INFO - Model saved at episode 356000
+2025-10-23 03:36:44,163 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep356000_20251023_033644.pth
+2025-10-23 03:38:22,159 - training - INFO - Evaluation ep 358000: win=0.590, draw=0.110, loss=0.300
+2025-10-23 03:38:22,384 - training - INFO - Model saved at episode 358000
+2025-10-23 03:38:22,900 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep358000_20251023_033822.pth
+2025-10-23 03:40:00,421 - training - INFO - Evaluation ep 360000: win=0.680, draw=0.090, loss=0.230
+2025-10-23 03:40:00,649 - training - INFO - Model saved at episode 360000
+2025-10-23 03:40:01,164 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep360000_20251023_034001.pth
+2025-10-23 03:41:39,002 - training - INFO - Evaluation ep 362000: win=0.690, draw=0.130, loss=0.180
+2025-10-23 03:41:39,228 - training - INFO - Model saved at episode 362000
+2025-10-23 03:41:39,739 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep362000_20251023_034139.pth
+2025-10-23 03:43:17,251 - training - INFO - Evaluation ep 364000: win=0.600, draw=0.070, loss=0.330
+2025-10-23 03:43:17,478 - training - INFO - Model saved at episode 364000
+2025-10-23 03:43:17,991 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep364000_20251023_034317.pth
+2025-10-23 03:44:56,236 - training - INFO - Evaluation ep 366000: win=0.600, draw=0.070, loss=0.330
+2025-10-23 03:44:56,464 - training - INFO - Model saved at episode 366000
+2025-10-23 03:44:56,975 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep366000_20251023_034456.pth
+2025-10-23 03:46:34,386 - training - INFO - Evaluation ep 368000: win=0.590, draw=0.110, loss=0.300
+2025-10-23 03:46:34,612 - training - INFO - Model saved at episode 368000
+2025-10-23 03:46:35,128 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep368000_20251023_034635.pth
+2025-10-23 03:48:13,081 - training - INFO - Evaluation ep 370000: win=0.610, draw=0.150, loss=0.240
+2025-10-23 03:48:13,306 - training - INFO - Model saved at episode 370000
+2025-10-23 03:48:13,822 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep370000_20251023_034813.pth
+2025-10-23 03:49:52,530 - training - INFO - Evaluation ep 372000: win=0.630, draw=0.130, loss=0.240
+2025-10-23 03:49:52,757 - training - INFO - Model saved at episode 372000
+2025-10-23 03:49:53,272 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep372000_20251023_034953.pth
+2025-10-23 03:51:31,687 - training - INFO - Evaluation ep 374000: win=0.590, draw=0.150, loss=0.260
+2025-10-23 03:51:31,913 - training - INFO - Model saved at episode 374000
+2025-10-23 03:51:32,428 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep374000_20251023_035132.pth
+2025-10-23 03:53:10,194 - training - INFO - Evaluation ep 376000: win=0.600, draw=0.170, loss=0.230
+2025-10-23 03:53:10,421 - training - INFO - Model saved at episode 376000
+2025-10-23 03:53:10,935 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep376000_20251023_035310.pth
+2025-10-23 03:54:49,700 - training - INFO - Evaluation ep 378000: win=0.630, draw=0.240, loss=0.130
+2025-10-23 03:54:49,927 - training - INFO - Model saved at episode 378000
+2025-10-23 03:54:50,437 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep378000_20251023_035450.pth
+2025-10-23 03:56:27,559 - training - INFO - Evaluation ep 380000: win=0.650, draw=0.100, loss=0.250
+2025-10-23 03:56:27,787 - training - INFO - Model saved at episode 380000
+2025-10-23 03:56:28,302 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep380000_20251023_035628.pth
+2025-10-23 03:58:05,844 - training - INFO - Evaluation ep 382000: win=0.610, draw=0.110, loss=0.280
+2025-10-23 03:58:06,069 - training - INFO - Model saved at episode 382000
+2025-10-23 03:58:06,581 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep382000_20251023_035806.pth
+2025-10-23 03:59:44,467 - training - INFO - Evaluation ep 384000: win=0.620, draw=0.080, loss=0.300
+2025-10-23 03:59:44,695 - training - INFO - Model saved at episode 384000
+2025-10-23 03:59:45,210 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep384000_20251023_035945.pth
+2025-10-23 04:01:22,484 - training - INFO - Evaluation ep 386000: win=0.690, draw=0.080, loss=0.230
+2025-10-23 04:01:22,705 - training - INFO - Model saved at episode 386000
+2025-10-23 04:01:23,222 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep386000_20251023_040123.pth
+2025-10-23 04:03:00,327 - training - INFO - Evaluation ep 388000: win=0.610, draw=0.180, loss=0.210
+2025-10-23 04:03:00,555 - training - INFO - Model saved at episode 388000
+2025-10-23 04:03:01,070 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep388000_20251023_040301.pth
+2025-10-23 04:04:38,076 - training - INFO - Evaluation ep 390000: win=0.580, draw=0.140, loss=0.280
+2025-10-23 04:04:38,302 - training - INFO - Model saved at episode 390000
+2025-10-23 04:04:38,817 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep390000_20251023_040438.pth
+2025-10-23 04:06:16,277 - training - INFO - Evaluation ep 392000: win=0.530, draw=0.170, loss=0.300
+2025-10-23 04:06:16,504 - training - INFO - Model saved at episode 392000
+2025-10-23 04:06:17,014 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep392000_20251023_040617.pth
+2025-10-23 04:07:54,542 - training - INFO - Evaluation ep 394000: win=0.540, draw=0.140, loss=0.320
+2025-10-23 04:07:54,769 - training - INFO - Model saved at episode 394000
+2025-10-23 04:07:55,285 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep394000_20251023_040755.pth
+2025-10-23 04:09:31,611 - training - INFO - Evaluation ep 396000: win=0.580, draw=0.110, loss=0.310
+2025-10-23 04:09:31,840 - training - INFO - Model saved at episode 396000
+2025-10-23 04:09:32,352 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep396000_20251023_040932.pth
+2025-10-23 04:11:09,320 - training - INFO - Evaluation ep 398000: win=0.590, draw=0.150, loss=0.260
+2025-10-23 04:11:09,548 - training - INFO - Model saved at episode 398000
+2025-10-23 04:11:10,063 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep398000_20251023_041110.pth
+2025-10-23 04:12:47,600 - training - INFO - Evaluation ep 400000: win=0.650, draw=0.090, loss=0.260
+2025-10-23 04:12:47,826 - training - INFO - Model saved at episode 400000
+2025-10-23 04:12:48,342 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep400000_20251023_041248.pth
+2025-10-23 04:14:25,652 - training - INFO - Evaluation ep 402000: win=0.660, draw=0.180, loss=0.160
+2025-10-23 04:14:25,880 - training - INFO - Model saved at episode 402000
+2025-10-23 04:14:26,396 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep402000_20251023_041426.pth
+2025-10-23 04:16:04,195 - training - INFO - Evaluation ep 404000: win=0.670, draw=0.110, loss=0.220
+2025-10-23 04:16:04,421 - training - INFO - Model saved at episode 404000
+2025-10-23 04:16:04,935 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep404000_20251023_041604.pth
+2025-10-23 04:17:43,017 - training - INFO - Evaluation ep 406000: win=0.590, draw=0.130, loss=0.280
+2025-10-23 04:17:43,236 - training - INFO - Model saved at episode 406000
+2025-10-23 04:17:43,752 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep406000_20251023_041743.pth
+2025-10-23 04:19:21,072 - training - INFO - Evaluation ep 408000: win=0.630, draw=0.120, loss=0.250
+2025-10-23 04:19:21,298 - training - INFO - Model saved at episode 408000
+2025-10-23 04:19:21,813 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep408000_20251023_041921.pth
+2025-10-23 04:21:01,016 - training - INFO - Evaluation ep 410000: win=0.670, draw=0.130, loss=0.200
+2025-10-23 04:21:01,243 - training - INFO - Model saved at episode 410000
+2025-10-23 04:21:01,758 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep410000_20251023_042101.pth
+2025-10-23 04:22:39,809 - training - INFO - Evaluation ep 412000: win=0.680, draw=0.140, loss=0.180
+2025-10-23 04:22:40,036 - training - INFO - Model saved at episode 412000
+2025-10-23 04:22:40,546 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep412000_20251023_042240.pth
+2025-10-23 04:24:17,981 - training - INFO - Evaluation ep 414000: win=0.680, draw=0.110, loss=0.210
+2025-10-23 04:24:18,208 - training - INFO - Model saved at episode 414000
+2025-10-23 04:24:18,721 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep414000_20251023_042418.pth
+2025-10-23 04:25:56,150 - training - INFO - Evaluation ep 416000: win=0.710, draw=0.140, loss=0.150
+2025-10-23 04:25:56,377 - training - INFO - Model saved at episode 416000
+2025-10-23 04:25:56,892 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep416000_20251023_042556.pth
+2025-10-23 04:27:34,684 - training - INFO - Evaluation ep 418000: win=0.610, draw=0.120, loss=0.270
+2025-10-23 04:27:34,903 - training - INFO - Model saved at episode 418000
+2025-10-23 04:27:35,412 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep418000_20251023_042735.pth
+2025-10-23 04:29:12,619 - training - INFO - Evaluation ep 420000: win=0.640, draw=0.120, loss=0.240
+2025-10-23 04:29:12,846 - training - INFO - Model saved at episode 420000
+2025-10-23 04:29:13,359 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep420000_20251023_042913.pth
+2025-10-23 04:30:50,524 - training - INFO - Evaluation ep 422000: win=0.650, draw=0.120, loss=0.230
+2025-10-23 04:30:50,752 - training - INFO - Model saved at episode 422000
+2025-10-23 04:30:51,274 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep422000_20251023_043051.pth
+2025-10-23 04:32:28,934 - training - INFO - Evaluation ep 424000: win=0.630, draw=0.140, loss=0.230
+2025-10-23 04:32:29,161 - training - INFO - Model saved at episode 424000
+2025-10-23 04:32:29,670 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep424000_20251023_043229.pth
+2025-10-23 04:34:07,547 - training - INFO - Evaluation ep 426000: win=0.540, draw=0.100, loss=0.360
+2025-10-23 04:34:07,772 - training - INFO - Model saved at episode 426000
+2025-10-23 04:34:08,287 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep426000_20251023_043408.pth
+2025-10-23 04:35:44,779 - training - INFO - Evaluation ep 428000: win=0.600, draw=0.130, loss=0.270
+2025-10-23 04:35:44,999 - training - INFO - Model saved at episode 428000
+2025-10-23 04:35:45,515 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep428000_20251023_043545.pth
+2025-10-23 04:37:22,981 - training - INFO - Evaluation ep 430000: win=0.580, draw=0.150, loss=0.270
+2025-10-23 04:37:23,207 - training - INFO - Model saved at episode 430000
+2025-10-23 04:37:23,722 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep430000_20251023_043723.pth
+2025-10-23 04:39:01,004 - training - INFO - Evaluation ep 432000: win=0.580, draw=0.100, loss=0.320
+2025-10-23 04:39:01,230 - training - INFO - Model saved at episode 432000
+2025-10-23 04:39:01,741 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep432000_20251023_043901.pth
+2025-10-23 04:40:38,979 - training - INFO - Evaluation ep 434000: win=0.650, draw=0.120, loss=0.230
+2025-10-23 04:40:39,205 - training - INFO - Model saved at episode 434000
+2025-10-23 04:40:39,713 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep434000_20251023_044039.pth
+2025-10-23 04:42:17,690 - training - INFO - Evaluation ep 436000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 04:42:17,917 - training - INFO - Model saved at episode 436000
+2025-10-23 04:42:18,431 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep436000_20251023_044218.pth
+2025-10-23 04:43:56,092 - training - INFO - Evaluation ep 438000: win=0.650, draw=0.090, loss=0.260
+2025-10-23 04:43:56,319 - training - INFO - Model saved at episode 438000
+2025-10-23 04:43:56,834 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep438000_20251023_044356.pth
+2025-10-23 04:45:34,501 - training - INFO - Evaluation ep 440000: win=0.690, draw=0.090, loss=0.220
+2025-10-23 04:45:34,726 - training - INFO - Model saved at episode 440000
+2025-10-23 04:45:35,242 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep440000_20251023_044535.pth
+2025-10-23 04:47:13,722 - training - INFO - Evaluation ep 442000: win=0.640, draw=0.130, loss=0.230
+2025-10-23 04:47:13,943 - training - INFO - Model saved at episode 442000
+2025-10-23 04:47:14,457 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep442000_20251023_044714.pth
+2025-10-23 04:48:51,969 - training - INFO - Evaluation ep 444000: win=0.650, draw=0.150, loss=0.200
+2025-10-23 04:48:52,196 - training - INFO - Model saved at episode 444000
+2025-10-23 04:48:52,707 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep444000_20251023_044852.pth
+2025-10-23 04:50:29,595 - training - INFO - Evaluation ep 446000: win=0.590, draw=0.100, loss=0.310
+2025-10-23 04:50:29,820 - training - INFO - Model saved at episode 446000
+2025-10-23 04:50:30,336 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep446000_20251023_045030.pth
+2025-10-23 04:52:07,612 - training - INFO - Evaluation ep 448000: win=0.720, draw=0.160, loss=0.120
+2025-10-23 04:52:07,839 - training - INFO - Model saved at episode 448000
+2025-10-23 04:52:08,355 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep448000_20251023_045208.pth
+2025-10-23 04:53:46,299 - training - INFO - Evaluation ep 450000: win=0.620, draw=0.130, loss=0.250
+2025-10-23 04:53:46,522 - training - INFO - Model saved at episode 450000
+2025-10-23 04:53:47,036 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep450000_20251023_045347.pth
+2025-10-23 04:55:24,392 - training - INFO - Evaluation ep 452000: win=0.590, draw=0.170, loss=0.240
+2025-10-23 04:55:24,621 - training - INFO - Model saved at episode 452000
+2025-10-23 04:55:25,139 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep452000_20251023_045525.pth
+2025-10-23 04:57:02,977 - training - INFO - Evaluation ep 454000: win=0.600, draw=0.150, loss=0.250
+2025-10-23 04:57:03,208 - training - INFO - Model saved at episode 454000
+2025-10-23 04:57:03,717 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep454000_20251023_045703.pth
+2025-10-23 04:58:41,371 - training - INFO - Evaluation ep 456000: win=0.620, draw=0.150, loss=0.230
+2025-10-23 04:58:41,601 - training - INFO - Model saved at episode 456000
+2025-10-23 04:58:42,116 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep456000_20251023_045842.pth
+2025-10-23 05:00:19,691 - training - INFO - Evaluation ep 458000: win=0.590, draw=0.120, loss=0.290
+2025-10-23 05:00:19,918 - training - INFO - Model saved at episode 458000
+2025-10-23 05:00:20,437 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep458000_20251023_050020.pth
+2025-10-23 05:01:57,350 - training - INFO - Evaluation ep 460000: win=0.650, draw=0.060, loss=0.290
+2025-10-23 05:01:57,577 - training - INFO - Model saved at episode 460000
+2025-10-23 05:01:58,093 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep460000_20251023_050158.pth
+2025-10-23 05:03:34,834 - training - INFO - Evaluation ep 462000: win=0.630, draw=0.140, loss=0.230
+2025-10-23 05:03:35,061 - training - INFO - Model saved at episode 462000
+2025-10-23 05:03:35,576 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep462000_20251023_050335.pth
+2025-10-23 05:05:13,397 - training - INFO - Evaluation ep 464000: win=0.540, draw=0.160, loss=0.300
+2025-10-23 05:05:13,623 - training - INFO - Model saved at episode 464000
+2025-10-23 05:05:14,139 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep464000_20251023_050514.pth
+2025-10-23 05:06:51,985 - training - INFO - Evaluation ep 466000: win=0.630, draw=0.110, loss=0.260
+2025-10-23 05:06:52,211 - training - INFO - Model saved at episode 466000
+2025-10-23 05:06:52,727 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep466000_20251023_050652.pth
+2025-10-23 05:08:29,157 - training - INFO - Evaluation ep 468000: win=0.610, draw=0.110, loss=0.280
+2025-10-23 05:08:29,384 - training - INFO - Model saved at episode 468000
+2025-10-23 05:08:29,895 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep468000_20251023_050829.pth
+2025-10-23 05:10:07,795 - training - INFO - Evaluation ep 470000: win=0.660, draw=0.130, loss=0.210
+2025-10-23 05:10:08,018 - training - INFO - Model saved at episode 470000
+2025-10-23 05:10:08,527 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep470000_20251023_051008.pth
+2025-10-23 05:11:46,464 - training - INFO - Evaluation ep 472000: win=0.620, draw=0.120, loss=0.260
+2025-10-23 05:11:46,690 - training - INFO - Model saved at episode 472000
+2025-10-23 05:11:47,202 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep472000_20251023_051147.pth
+2025-10-23 05:13:24,911 - training - INFO - Evaluation ep 474000: win=0.610, draw=0.130, loss=0.260
+2025-10-23 05:13:25,136 - training - INFO - Model saved at episode 474000
+2025-10-23 05:13:25,652 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep474000_20251023_051325.pth
+2025-10-23 05:15:03,593 - training - INFO - Evaluation ep 476000: win=0.650, draw=0.130, loss=0.220
+2025-10-23 05:15:03,819 - training - INFO - Model saved at episode 476000
+2025-10-23 05:15:04,332 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep476000_20251023_051504.pth
+2025-10-23 05:16:41,420 - training - INFO - Evaluation ep 478000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 05:16:41,646 - training - INFO - Model saved at episode 478000
+2025-10-23 05:16:42,162 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep478000_20251023_051642.pth
+2025-10-23 05:18:20,465 - training - INFO - Evaluation ep 480000: win=0.700, draw=0.110, loss=0.190
+2025-10-23 05:18:20,691 - training - INFO - Model saved at episode 480000
+2025-10-23 05:18:21,199 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep480000_20251023_051821.pth
+2025-10-23 05:19:59,016 - training - INFO - Evaluation ep 482000: win=0.560, draw=0.080, loss=0.360
+2025-10-23 05:19:59,242 - training - INFO - Model saved at episode 482000
+2025-10-23 05:19:59,753 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep482000_20251023_051959.pth
+2025-10-23 05:21:36,556 - training - INFO - Evaluation ep 484000: win=0.740, draw=0.080, loss=0.180
+2025-10-23 05:21:36,783 - training - INFO - Model saved at episode 484000
+2025-10-23 05:21:37,292 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep484000_20251023_052137.pth
+2025-10-23 05:23:14,880 - training - INFO - Evaluation ep 486000: win=0.670, draw=0.160, loss=0.170
+2025-10-23 05:23:15,107 - training - INFO - Model saved at episode 486000
+2025-10-23 05:23:15,618 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep486000_20251023_052315.pth
+2025-10-23 05:24:53,219 - training - INFO - Evaluation ep 488000: win=0.630, draw=0.120, loss=0.250
+2025-10-23 05:24:53,446 - training - INFO - Model saved at episode 488000
+2025-10-23 05:24:53,962 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep488000_20251023_052453.pth
+2025-10-23 05:26:31,936 - training - INFO - Evaluation ep 490000: win=0.600, draw=0.120, loss=0.280
+2025-10-23 05:26:32,162 - training - INFO - Model saved at episode 490000
+2025-10-23 05:26:32,669 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep490000_20251023_052632.pth
+2025-10-23 05:28:10,828 - training - INFO - Evaluation ep 492000: win=0.510, draw=0.150, loss=0.340
+2025-10-23 05:28:11,048 - training - INFO - Model saved at episode 492000
+2025-10-23 05:28:11,563 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep492000_20251023_052811.pth
+2025-10-23 05:29:50,136 - training - INFO - Evaluation ep 494000: win=0.620, draw=0.120, loss=0.260
+2025-10-23 05:29:50,363 - training - INFO - Model saved at episode 494000
+2025-10-23 05:29:50,877 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep494000_20251023_052950.pth
+2025-10-23 05:31:28,103 - training - INFO - Evaluation ep 496000: win=0.620, draw=0.160, loss=0.220
+2025-10-23 05:31:28,329 - training - INFO - Model saved at episode 496000
+2025-10-23 05:31:28,844 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep496000_20251023_053128.pth
+2025-10-23 05:33:07,063 - training - INFO - Evaluation ep 498000: win=0.620, draw=0.100, loss=0.280
+2025-10-23 05:33:07,289 - training - INFO - Model saved at episode 498000
+2025-10-23 05:33:07,800 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep498000_20251023_053307.pth
+2025-10-23 05:34:45,737 - training - INFO - Evaluation ep 500000: win=0.590, draw=0.120, loss=0.290
+2025-10-23 05:34:45,965 - training - INFO - Model saved at episode 500000
+2025-10-23 05:34:46,480 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep500000_20251023_053446.pth
+2025-10-23 05:34:46,483 - training - INFO - Training completed. Final metrics: {'win_rate': np.float64(0.35), 'avg_reward': np.float64(-0.3), 'avg_loss': np.float64(0.09389051085550819), 'eval_win_rate': 0.59}
