@@ -1718,3 +1718,51 @@
 2025-10-23 00:24:45,417 - tictactoe_training - INFO - Model saved at episode 1000000
 2025-10-23 00:24:45,928 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep1000000_20251023_002445.pth
 2025-10-23 00:24:45,929 - tictactoe_training - INFO - Training completed. Final metrics: {'win_rate': np.float64(0.635), 'avg_reward': np.float64(0.27), 'avg_loss': np.float64(7.447361093738891e-05), 'eval_win_rate': 0.54}
+2025-10-23 18:19:38,216 - tictactoe_training - INFO - Starting TicTacToe training: 3x3, win_length=3, 500000 episodes
+2025-10-23 18:19:59,236 - tictactoe_training - INFO - Evaluation ep 2000: win=0.480, draw=0.140, loss=0.380
+2025-10-23 18:19:59,447 - tictactoe_training - INFO - Model saved at episode 2000
+2025-10-23 18:19:59,952 - tictactoe_training - INFO - New best model saved: win_rate=0.565
+2025-10-23 18:19:59,952 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep2000_20251023_181959.pth
+2025-10-23 18:20:19,780 - tictactoe_training - INFO - Evaluation ep 4000: win=0.580, draw=0.180, loss=0.240
+2025-10-23 18:20:19,986 - tictactoe_training - INFO - Model saved at episode 4000
+2025-10-23 18:20:20,490 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep4000_20251023_182020.pth
+2025-10-23 18:20:40,186 - tictactoe_training - INFO - Evaluation ep 6000: win=0.520, draw=0.260, loss=0.220
+2025-10-23 18:20:40,393 - tictactoe_training - INFO - Model saved at episode 6000
+2025-10-23 18:20:40,899 - tictactoe_training - INFO - New best model saved: win_rate=0.585
+2025-10-23 18:20:40,899 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep6000_20251023_182040.pth
+2025-10-23 18:21:23,087 - tictactoe_training - INFO - Evaluation ep 8000: win=0.620, draw=0.120, loss=0.260
+2025-10-23 18:21:23,292 - tictactoe_training - INFO - Model saved at episode 8000
+2025-10-23 18:21:23,795 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep8000_20251023_182123.pth
+2025-10-23 18:21:54,379 - tictactoe_training - INFO - Evaluation ep 10000: win=0.400, draw=0.160, loss=0.440
+2025-10-23 18:21:54,587 - tictactoe_training - INFO - Model saved at episode 10000
+2025-10-23 18:21:55,090 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep10000_20251023_182155.pth
+2025-10-23 18:22:14,835 - tictactoe_training - INFO - Evaluation ep 12000: win=0.600, draw=0.140, loss=0.260
+2025-10-23 18:22:15,040 - tictactoe_training - INFO - Model saved at episode 12000
+2025-10-23 18:22:15,547 - tictactoe_training - INFO - New best model saved: win_rate=0.625
+2025-10-23 18:22:15,547 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep12000_20251023_182215.pth
+2025-10-23 18:22:35,431 - tictactoe_training - INFO - Evaluation ep 14000: win=0.540, draw=0.100, loss=0.360
+2025-10-23 18:22:35,636 - tictactoe_training - INFO - Model saved at episode 14000
+2025-10-23 18:22:36,141 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep14000_20251023_182236.pth
+2025-10-23 18:22:57,085 - tictactoe_training - INFO - Evaluation ep 16000: win=0.580, draw=0.080, loss=0.340
+2025-10-23 18:22:57,291 - tictactoe_training - INFO - Model saved at episode 16000
+2025-10-23 18:22:57,796 - tictactoe_training - INFO - New best model saved: win_rate=0.630
+2025-10-23 18:22:57,797 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep16000_20251023_182257.pth
+2025-10-23 18:23:17,993 - tictactoe_training - INFO - Evaluation ep 18000: win=0.400, draw=0.260, loss=0.340
+2025-10-23 18:23:18,199 - tictactoe_training - INFO - Model saved at episode 18000
+2025-10-23 18:23:18,702 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep18000_20251023_182318.pth
+2025-10-23 18:23:38,974 - tictactoe_training - INFO - Evaluation ep 20000: win=0.540, draw=0.180, loss=0.280
+2025-10-23 18:23:39,180 - tictactoe_training - INFO - Model saved at episode 20000
+2025-10-23 18:23:39,683 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep20000_20251023_182339.pth
+2025-10-23 18:23:59,469 - tictactoe_training - INFO - Evaluation ep 22000: win=0.440, draw=0.220, loss=0.340
+2025-10-23 18:23:59,674 - tictactoe_training - INFO - Model saved at episode 22000
+2025-10-23 18:24:00,177 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep22000_20251023_182400.pth
+2025-10-23 18:24:20,185 - tictactoe_training - INFO - Evaluation ep 24000: win=0.580, draw=0.080, loss=0.340
+2025-10-23 18:24:20,390 - tictactoe_training - INFO - Model saved at episode 24000
+2025-10-23 18:24:20,893 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep24000_20251023_182420.pth
+2025-10-23 18:24:40,992 - tictactoe_training - INFO - Evaluation ep 26000: win=0.420, draw=0.340, loss=0.240
+2025-10-23 18:24:41,198 - tictactoe_training - INFO - Model saved at episode 26000
+2025-10-23 18:24:41,704 - tictactoe_training - INFO - New best model saved: win_rate=0.660
+2025-10-23 18:24:41,704 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep26000_20251023_182441.pth
+2025-10-23 18:34:18,351 - tictactoe_training - INFO - Evaluation ep 28000: win=0.600, draw=0.060, loss=0.340
+2025-10-23 18:34:18,558 - tictactoe_training - INFO - Model saved at episode 28000
+2025-10-23 18:34:19,061 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep28000_20251023_183419.pth

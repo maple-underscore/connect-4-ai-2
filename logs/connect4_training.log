@@ -758,3 +758,32 @@
 2025-10-23 05:34:45,965 - training - INFO - Model saved at episode 500000
 2025-10-23 05:34:46,480 - training - INFO - Checkpoint saved: checkpoints/checkpoint_ep500000_20251023_053446.pth
 2025-10-23 05:34:46,483 - training - INFO - Training completed. Final metrics: {'win_rate': np.float64(0.35), 'avg_reward': np.float64(-0.3), 'avg_loss': np.float64(0.09389051085550819), 'eval_win_rate': 0.59}
+2025-10-23 21:52:55,693 - training - INFO - Starting training with 100000 episodes
+2025-10-23 21:54:47,829 - training - INFO - Training interrupted. Final metrics: {'win_rate': np.float64(0.59), 'avg_reward': np.float64(0.18), 'avg_loss': np.float64(0.025407131109386683), 'eval_win_rate': 0}
+2025-10-23 21:55:36,940 - training - INFO - Starting training with 100000 episodes
+2025-10-23 21:56:48,715 - training - INFO - Evaluation ep 2000: win=0.460, draw=0.030, loss=0.510
+2025-10-23 21:56:48,921 - training - INFO - Model saved at episode 2000
+2025-10-23 21:56:49,427 - training - INFO - New best model saved: win_rate=0.470
+2025-10-23 21:56:49,427 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep2000_20251023_215649.pth
+2025-10-23 21:58:06,019 - training - INFO - Evaluation ep 4000: win=0.420, draw=0.040, loss=0.540
+2025-10-23 21:58:06,225 - training - INFO - Model saved at episode 4000
+2025-10-23 21:58:06,732 - training - INFO - New best model saved: win_rate=0.510
+2025-10-23 21:58:06,732 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep4000_20251023_215806.pth
+2025-10-23 21:59:29,271 - training - INFO - Evaluation ep 6000: win=0.210, draw=0.020, loss=0.770
+2025-10-23 21:59:29,476 - training - INFO - Model saved at episode 6000
+2025-10-23 21:59:29,984 - training - INFO - New best model saved: win_rate=0.540
+2025-10-23 21:59:29,984 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep6000_20251023_215929.pth
+2025-10-23 22:00:45,684 - training - INFO - Evaluation ep 8000: win=0.470, draw=0.000, loss=0.530
+2025-10-23 22:00:45,889 - training - INFO - Model saved at episode 8000
+2025-10-23 22:00:46,393 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep8000_20251023_220046.pth
+2025-10-23 22:02:05,642 - training - INFO - Evaluation ep 10000: win=0.220, draw=0.020, loss=0.760
+2025-10-23 22:02:05,847 - training - INFO - Model saved at episode 10000
+2025-10-23 22:02:06,353 - training - INFO - New best model saved: win_rate=0.685
+2025-10-23 22:02:06,354 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep10000_20251023_220206.pth
+2025-10-23 22:03:24,867 - training - INFO - Evaluation ep 12000: win=0.210, draw=0.020, loss=0.770
+2025-10-23 22:03:25,074 - training - INFO - Model saved at episode 12000
+2025-10-23 22:03:25,580 - training - INFO - New best model saved: win_rate=0.720
+2025-10-23 22:03:25,580 - training - INFO - Checkpoint saved: connect4_checkpoints/checkpoint_ep12000_20251023_220325.pth
+2025-10-23 22:11:36,982 - training - INFO - Training interrupted. Final metrics: {'win_rate': np.float64(0.805), 'avg_reward': np.float64(0.61), 'avg_loss': np.float64(0.22237490702420473), 'eval_win_rate': 0.21}
+2025-10-23 22:34:13,244 - training - INFO - Starting training with 100000 episodes
+2025-10-23 22:39:11,238 - training - INFO - Training interrupted. Final metrics: {'win_rate': np.float64(0.495), 'avg_reward': np.float64(-0.01), 'avg_loss': np.float64(0.06425773500697687), 'eval_win_rate': 0}

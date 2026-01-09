@@ -1,15 +1,15 @@
 {
-  "num_episodes": 500000,
+  "num_episodes": 100000,
   "learning_rate": 0.001,
   "gamma": 0.99,
   "epsilon_start": 1.0,
   "epsilon_min": 0.01,
-  "epsilon_decay": 0.9999,
+  "epsilon_decay": 0.999,
   "replay_memory_size": 10000,
   "batch_size": 64,
   "target_update": 10,
   "save_interval": 2000,
-  "model_path": "connect4_model.pth",
+  "model_path": "models/c4_model.pth",
   "gradient_clip": 1.0,
   "weight_decay": 1e-5,
   "eval_interval": 2000,
@@ -33,7 +33,7 @@
   },
   "checkpointing": {
     "enabled": true,
-    "checkpoint_dir": "checkpoints",
+    "checkpoint_dir": "connect4_checkpoints",
     "keep_best": true,
     "metric": "win_rate"
   },
@@ -41,5 +41,6 @@
     "plot_training": false,
     "save_plots": false,
     "plot_dir": "plots"
-  }
+  },
+  "use_advanced_tactics": true
 }

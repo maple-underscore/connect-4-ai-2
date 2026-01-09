@@ -414,6 +414,9 @@ class DQNAgent:
         # Stability / loss
         self.loss_fn = nn.SmoothL1Loss()  # Huber loss is more robust than MSE
         self.gradient_clip = config.get('gradient_clip', 1.0)
+        
+        # Performance optimization: enable/disable expensive tactical checks
+        self.use_advanced_tactics = config.get('use_advanced_tactics', True)
     
     def _state_to_input(self, state):
         """Normalize board to -1/0/+1 tensor: player1=+1, player2=-1, empty=0"""
@@ -423,124 +426,6 @@ class DQNAgent:
         mapped = p1 - p2
         return torch.from_numpy(mapped.flatten()).unsqueeze(0).to(self.device)
 
-    def _check_potential_diagonal(self, board, player, valid_moves):
-        """Check for potential diagonal wins and threats that require immediate attention"""
-        rows, cols = board.shape
-        threats = []
-        
-        # Check potential diagonal threats requiring just one more move
-        for col in valid_moves:
-            # Find row where piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate placing piece
-            test = board.copy()
-            test[row, col] = player
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(player) == 3 and diagonal.count(0) == 1:
-                        threats.append((col, 2))  # High priority threat
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(player) == 3 and diagonal.count(0) == 1:
-                        threats.append((col, 2))  # High priority threat
-        
-        return threats
-
-    def _check_diagonal_setup(self, board, player, valid_moves, opponent_moves=None):
-        """Check for moves that create or prevent diagonal setups"""
-        if opponent_moves is None:
-            opponent_moves = valid_moves
-            
-        rows, cols = board.shape
-        setups = []
-        blocks = []
-        
-        # Look for setups that create two threats in one move
-        for col in valid_moves:
-            # Find row where piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate our move
-            test = board.copy()
-            test[row, col] = player
-            
-            # Count how many potential diagonal threats we create
-            threat_count = 0
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(player) >= 2 and diagonal.count(0) == 4 - diagonal.count(player):
-                        threat_count += 1
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(player) >= 2 and diagonal.count(0) == 4 - diagonal.count(player):
-                        threat_count += 1
-            
-            if threat_count >= 2:
-                setups.append((col, 1))  # Medium priority setup
-                
-        # Check opponent's potential setups to block
-        opponent = 3 - player
-        for col in opponent_moves:
-            # Find row where opponent piece would land
-            row = None
-            for r in range(rows-1, -1, -1):
-                if board[r, col] == 0:
-                    row = r
-                    break
-            if row is None:
-                continue
-                
-            # Simulate opponent move
-            test = board.copy()
-            test[row, col] = opponent
-            
-            # Count how many diagonal threats opponent creates
-            threat_count = 0
-            
-            # Check diagonals (down-right)
-            for r in range(rows-3):
-                for c in range(cols-3):
-                    diagonal = [test[r+i, c+i] for i in range(4)]
-                    if diagonal.count(opponent) >= 2 and diagonal.count(0) == 4 - diagonal.count(opponent):
-                        threat_count += 1
-            
-            # Check diagonals (up-right)
-            for r in range(3, rows):
-                for c in range(cols-3):
-                    diagonal = [test[r-i, c+i] for i in range(4)]
-                    if diagonal.count(opponent) >= 2 and diagonal.count(0) == 4 - diagonal.count(opponent):
-                        threat_count += 1
-            
-            if threat_count >= 2:
-                blocks.append((col, 1))  # Block opponent's potential setup
-        
-        return setups, blocks
-    
     def _check_win_board(self, board, player):
         """Quick inline win check for a numpy board (used by tactical rules)."""
         rows, cols = board.shape
@@ -578,138 +463,107 @@ class DQNAgent:
                 return col
         return None
     
-    def _count_immediate_wins(self, board, player):
-        """Count how many immediate winning moves `player` has on `board`."""
-        rows, cols = board.shape
+    def _drop(self, board, col, player):
+        """Simulate dropping a piece into col for player. Return new board or None if column full."""
+        if board[0, col] != 0:
+            return None
+        b = board.copy()
+        for r in range(b.shape[0] - 1, -1, -1):
+            if b[r, col] == 0:
+                b[r, col] = player
+                return b
+        return None
+
+    def _count_immediate_wins_fast(self, board, player, valid_moves):
+        """Fast version: only check valid columns"""
         count = 0
-        for col in range(cols):
-            if board[0, col] != 0:
-                continue
-            test = board.copy()
-            for r in range(rows - 1, -1, -1):
-                if test[r, col] == 0:
-                    test[r, col] = player
-                    break
-            if self._check_win_board(test, player):
+        for col in valid_moves:
+            b = self._drop(board, col, player)
+            if b is not None and self._check_win_board(b, player):
                 count += 1
         return count
     
-    def _find_fork_moves(self, board, player, valid_moves=None):
-        """Return list of columns where player would create a fork (>=2 immediate wins)."""
-        rows, cols = board.shape
-        if valid_moves is None:
-            valid_moves = [c for c in range(cols) if board[0, c] == 0]
+    def _find_fork_moves_fast(self, board, player, valid_moves):
+        """Optimized fork detection: return columns where player creates >=2 immediate wins"""
         forks = []
         for col in valid_moves:
-            # simulate placing at col
-            test = board.copy()
-            placed = False
-            for r in range(rows - 1, -1, -1):
-                if test[r, col] == 0:
-                    test[r, col] = player
-                    placed = True
-                    break
-            if not placed:
+            b = self._drop(board, col, player)
+            if b is None:
                 continue
-            # count how many immediate winning moves player would have after this placement
-            wins_after = self._count_immediate_wins(test, player)
-            # If the simulated placement is itself a win, wins_after will be >=1; fork requires 2 or more
+            # Count wins after this move
+            wins_after = self._count_immediate_wins_fast(b, player, [c for c in range(board.shape[1]) if b[0, c] == 0])
             if wins_after >= 2:
                 forks.append(col)
         return forks
-     
+
+    def _filter_safe_moves_fast(self, board, valid_moves):
+        """Fast safe-move filter: avoid moves giving opponent immediate win"""
+        safe = []
+        for c in valid_moves:
+            b1 = self._drop(board, c, 1)
+            if b1 is None:
+                continue
+            # Quick check: does opponent have immediate win?
+            opponent_valid = [col for col in range(board.shape[1]) if b1[0, col] == 0]
+            if self._find_winning_move_local(b1, 2, opponent_valid) is not None:
+                continue
+            safe.append(c)
+        return safe
+
     def get_action(self, state, valid_moves, training=True):
-        """Get action using epsilon-greedy policy with enhanced tactical reasoning"""
-        # 1) Winning move for us (agent pieces encoded as 1 in this interface)
+        """Get action using epsilon-greedy policy with optimized tactical reasoning"""
+        # 1) Our immediate win
         win_move = self._find_winning_move_local(state, 1, valid_moves)
         if win_move is not None:
             return win_move
 
-        # 2) Block opponent immediate win (opponent pieces are 2)
+        # 2) Block opponent immediate win
         block_move = self._find_winning_move_local(state, 2, valid_moves)
         if block_move is not None:
             return block_move
-        
-        # 2b) Block opponent forks (moves that create >=2 immediate wins)
-        opponent = 2
-        opponent_forks = self._find_fork_moves(state, opponent, valid_moves)
-        if opponent_forks:
-            # Prefer directly playing into the fork column(s) if possible
-            for c in opponent_forks:
-                if c in valid_moves:
-                    return c
-            # Otherwise try to find a move that prevents all opponent forks after our play
-            for my_move in valid_moves:
-                # simulate our move
-                test = state.copy()
-                for r in range(test.shape[0] - 1, -1, -1):
-                    if test[r, my_move] == 0:
-                        test[r, my_move] = 1
-                        break
-                new_opponent_forks = self._find_fork_moves(test, opponent)
-                if not new_opponent_forks:
-                    return my_move
-            # fallback: block earliest fork column (will be handled above if playable)
- 
-        # 3) Handle potential diagonal threats (near-wins that need attention)
-        diagonal_threats = self._check_potential_diagonal(state, 2, valid_moves)
-        if diagonal_threats:
-            # Sort by priority and return highest priority threat to block
-            diagonal_threats.sort(key=lambda x: x[1], reverse=True)
-            return diagonal_threats[0][0]
- 
-        # 4) Look for our own diagonal opportunities
-        our_diagonal_threats = self._check_potential_diagonal(state, 1, valid_moves)
-        if our_diagonal_threats:
-            # Sort by priority and return highest priority opportunity
-            our_diagonal_threats.sort(key=lambda x: x[1], reverse=True)
-            return our_diagonal_threats[0][0]
-        
-        # 4b) Try to create a fork for ourselves if available
-        my_forks = self._find_fork_moves(state, 1, valid_moves)
-        if my_forks:
-            # prefer center-aligned fork or just return first
-            center = state.shape[1] // 2
-            if center in my_forks:
-                return center
-            return my_forks[0]
-         
-        # 5) Check for diagonal setups (moves that create multiple threats)
-        setups, blocks = self._check_diagonal_setup(state, 1, valid_moves)
-        if setups:
-            setups.sort(key=lambda x: x[1], reverse=True)
-            return setups[0][0]
-        
-        # 6) Block opponent's potential diagonal setups
-        if blocks:
-            blocks.sort(key=lambda x: x[1], reverse=True)
-            return blocks[0][0]
 
-        # 7) Center preference as a cheap heuristic
-        center = state.shape[1] // 2
-        if center in valid_moves:
-            if (not training) or random.random() < 0.7:
-                return center
+        # Skip expensive checks during early training (warmup phase)
+        if self.use_advanced_tactics and (not training or self.epsilon < 0.5):
+            # 2b) Block opponent forks (>=2 immediate wins)
+            opponent_forks = self._find_fork_moves_fast(state, 2, valid_moves)
+            if opponent_forks:
+                return opponent_forks[0]  # Just take first fork column
 
-        # 8) Exploration
+            # 2c) Filter safe moves (don't give away immediate win)
+            safe_moves = self._filter_safe_moves_fast(state, valid_moves)
+            if safe_moves:
+                # Try to create our fork among safe moves
+                my_forks = self._find_fork_moves_fast(state, 1, safe_moves)
+                if my_forks:
+                    center = state.shape[1] // 2
+                    if center in my_forks:
+                        return center
+                    return my_forks[0]
+                
+                # Center preference within safe moves
+                center = state.shape[1] // 2
+                if center in safe_moves and ((not training) or random.random() < 0.7):
+                    return center
+                
+                # Use safe moves as candidates
+                valid_moves = safe_moves
+
+        # 3) Exploration
         if training and random.random() < self.epsilon:
             return random.choice(valid_moves)
 
-        # 9) Model action (use eval mode and no grad for single-sample inference)
+        # 4) Model action (fallback)
         with torch.no_grad():
             state_tensor = self._state_to_input(state)
-
             was_training = self.policy_net.training
             self.policy_net.eval()
             q_values = self.policy_net(state_tensor).cpu().numpy()[0]
             if was_training:
                 self.policy_net.train()
 
-        # Mask invalid moves
         masked_q = np.full(7, -np.inf, dtype=np.float32)
         for move in valid_moves:
             masked_q[move] = q_values[move]
-
         return int(np.argmax(masked_q))
     
     def remember(self, state, action, reward, next_state, done):
