@@ -1766,3 +1766,7 @@
 2025-10-23 18:34:18,351 - tictactoe_training - INFO - Evaluation ep 28000: win=0.600, draw=0.060, loss=0.340
 2025-10-23 18:34:18,558 - tictactoe_training - INFO - Model saved at episode 28000
 2025-10-23 18:34:19,061 - tictactoe_training - INFO - Checkpoint saved: tictactoe_checkpoints/checkpoint_ep28000_20251023_183419.pth
+2026-01-12 23:24:18,197 - tictactoe_training - INFO - Starting TicTacToe training: 3x3, win_length=3, 500000 episodes
+2026-01-12 23:25:12,508 - tictactoe_training - INFO - Training interrupted. Final metrics: {'win_rate': np.float64(0.585), 'avg_reward': np.float64(0.17), 'avg_loss': np.float64(0.004318303588079288), 'eval_win_rate': 0}
+2026-01-12 23:27:40,458 - tictactoe_training - INFO - Starting TicTacToe training: 3x3, win_length=3, 500000 episodes
+2026-01-12 23:28:14,736 - tictactoe_training - INFO - Training interrupted. Final metrics: {'win_rate': np.float64(0.61), 'avg_reward': np.float64(0.22), 'avg_loss': np.float64(0.0249137396691367), 'eval_win_rate': 0}

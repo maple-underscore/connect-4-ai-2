@@ -30,6 +30,14 @@ except ImportError:
     print("PyTorch not found. Please install it with: pip install torch")
     sys.exit(1)
 
+# Optimize CPU usage - use all available cores
+import multiprocessing
+num_cpus = multiprocessing.cpu_count()
+os.environ['OMP_NUM_THREADS'] = str(num_cpus)
+os.environ['MKL_NUM_THREADS'] = str(num_cpus)
+torch.set_num_threads(num_cpus)
+print(f"Configured to use {num_cpus} CPU cores")
+
 # colorama for colored console output
 from colorama import Fore as color, Style as style, init as colorama_init
 colorama_init()
@@ -382,6 +390,11 @@ class DQNAgent:
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
         
+        # Enable optimized CPU operations
+        if self.device.type == 'cpu':
+            # Use inference mode optimizations where possible
+            torch.set_float32_matmul_precision('high')
+        
         # Training parameters
         self.optimizer = optim.Adam(
             self.policy_net.parameters(), 
@@ -580,13 +593,21 @@ class DQNAgent:
         batch = random.sample(self.memory, self.batch_size)
         
         states_np = np.array([ (s == 1).astype(np.float32) - (s == 2).astype(np.float32) for s, _, _, _, _ in batch ])
-        next_states_np = np.array([ (s == 1).astype(np.float32) - (s == 2).astype(np.float32) for _, _, _, s, _ in batch ])
+        actions_np = np.array([ a for _, a, _, _, _ in batch ], dtype=np.int64)
+        rewards_np = np.array([ r for _, _, r, _, _ in batch ], dtype=np.float32)
+        next_states_np = np.array([ (ns == 1).astype(np.float32) - (ns == 2).astype(np.float32) for _, _, _, ns, _ in batch ])
+        dones_np = np.array([ d for _, _, _, _, d in batch ], dtype=np.float32)
         
-        states = torch.FloatTensor(states_np.reshape(self.batch_size, -1)).to(self.device)
-        actions = torch.LongTensor([a for _, a, _, _, _ in batch]).to(self.device)
-        rewards = torch.FloatTensor([r for _, _, r, _, _ in batch]).to(self.device)
-        next_states = torch.FloatTensor(next_states_np.reshape(self.batch_size, -1)).to(self.device)
-        dones = torch.FloatTensor([float(d) for _, _, _, _, d in batch]).to(self.device)
+        # Optimize tensor creation with non_blocking for faster CPU operations
+        states = torch.from_numpy(states_np).to(self.device, non_blocking=True)
+        actions = torch.from_numpy(actions_np).to(self.device, non_blocking=True)
+        rewards = torch.from_numpy(rewards_np).to(self.device, non_blocking=True)
+        next_states = torch.from_numpy(next_states_np).to(self.device, non_blocking=True)
+        dones = torch.from_numpy(dones_np).to(self.device, non_blocking=True)
+        
+        # Reshape for the network
+        states = states.reshape(self.batch_size, -1)
+        next_states = next_states.reshape(self.batch_size, -1)
         
         # Current Q values
         current_q = self.policy_net(states).gather(1, actions.unsqueeze(1)).squeeze(1)
